@@ -34,7 +34,7 @@ class Pretracker: NSObject, CLLocationManagerDelegate, UNUserNotificationCenterD
     var hasPosted = false
     var locationCounter = 4
     // 40-50 meters = road segment change
-    let distanceUpdate = 45.0
+    let distanceUpdate = 10.0
     var clLocationList = [CLLocation]()
     
     var locationManager:CLLocationManager?
@@ -86,7 +86,7 @@ class Pretracker: NSObject, CLLocationManagerDelegate, UNUserNotificationCenterD
         // TODO: modify contents for the request
         let content = UNMutableNotificationContent()
         content.title = "A lost item is nearby!"
-        content.body = "Can you help me look for a lost item?\n it is on \(road)"
+        content.body = "Can you help me look for a lost item?\n It is on \(road)"
         //        locationManager.delegate = self
         
         
@@ -256,9 +256,11 @@ class Pretracker: NSObject, CLLocationManagerDelegate, UNUserNotificationCenterD
                 let lat = hitRoads[key]?[0]
                 let lng = hitRoads[key]?[1]
                 let hitLocation = CLLocation(latitude: lat!, longitude: lng!)
-                if Double((currentLocation?.distance(from: hitLocation))!) <= 40.0 {
-                    showNotification(road: key, decision: "Hit")
-                    hasNotified = true
+                if let distance:Double = Double((currentLocation?.distance(from: hitLocation))!) {
+                    if distance <= 40.0 {
+                        showNotification(road: key, decision: "Hit")
+                        hasNotified = true
+                    }
                 }
                 
             }
@@ -332,9 +334,9 @@ class Pretracker: NSObject, CLLocationManagerDelegate, UNUserNotificationCenterD
         if checkLocationAccuracy(lastLocation) {
             currentLocation = lastLocation
             let distance = currentLocation?.distance(from: regionLocation!)
-            if Double(distance!) <= 80.0 && didEnterRegion! == false {
+            if Double(distance!) <= 90.0 && didEnterRegion! == false {
                 requestHitorWait()
-                showNotification(road: "testing", decision: "hit")
+                //showNotification(road: "testing", decision: "hit")
                 didEnterRegion = true
             }
             

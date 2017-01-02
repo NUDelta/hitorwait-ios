@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="15G1212" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina5_5" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="hitorwait" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
+                        <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="6Vk-0A-Pmr">
+                                <rect key="frame" x="20" y="28" width="374" height="629"/>
+                            </mapView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Current Road" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AFG-k1-pTg">
+                                <rect key="frame" x="20" y="28" width="374" height="34"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gwf-re-dP2">
+                                <rect key="frame" x="20" y="665" width="374" height="51"/>
+                                <color key="backgroundColor" red="1" green="0.44836635124797009" blue="0.41005524179062047" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <state key="normal" title="Current Road"/>
+                                <connections>
+                                    <action selector="didClickButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="0QN-kW-rD6"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="trailingMargin" secondItem="gwf-re-dP2" secondAttribute="trailing" id="2gK-UD-MM8"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="gwf-re-dP2" secondAttribute="leading" id="3Wq-2I-KaT"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="AFG-k1-pTg" secondAttribute="leading" id="5yp-Yf-zpl"/>
+                            <constraint firstItem="AFG-k1-pTg" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="8" symbolic="YES" id="Bfw-vr-WBW"/>
+                            <constraint firstItem="6Vk-0A-Pmr" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="8" symbolic="YES" id="JaK-n5-mNJ"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="gwf-re-dP2" secondAttribute="bottom" constant="8" symbolic="YES" id="OFw-vW-dCC"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="AFG-k1-pTg" secondAttribute="trailing" id="Vx7-T0-V6Z"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="6Vk-0A-Pmr" secondAttribute="leading" id="d2S-k4-fp1"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="6Vk-0A-Pmr" secondAttribute="trailing" id="evj-lF-zfe"/>
+                            <constraint firstItem="gwf-re-dP2" firstAttribute="top" secondItem="6Vk-0A-Pmr" secondAttribute="bottom" constant="8" symbolic="YES" id="p2M-Zq-1Go"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="mapView" destination="6Vk-0A-Pmr" id="QiF-Yx-6m0"/>
+                        <outlet property="roadLabel" destination="AFG-k1-pTg" id="KI5-kp-wDL"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="141.59999999999999" y="138.98050974512745"/>
+        </scene>
+    </scenes>
+</document>

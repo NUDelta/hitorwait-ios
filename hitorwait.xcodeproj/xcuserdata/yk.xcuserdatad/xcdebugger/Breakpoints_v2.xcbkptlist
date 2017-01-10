@@ -9,13 +9,13 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "hitorwait/ViewController.swift"
-            timestampString = "504747075.692811"
+            filePath = "hitorwait/Pretracker.swift"
+            timestampString = "505768037.030097"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "60"
-            endingLineNumber = "60"
-            landmarkName = "catchNotification(notification:)"
+            startingLineNumber = "86"
+            endingLineNumber = "86"
+            landmarkName = "showNotification(road:decision:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -26,28 +26,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "hitorwait/Pretracker.swift"
-            timestampString = "505008620.923353"
+            timestampString = "505768037.030097"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "253"
-            endingLineNumber = "253"
-            landmarkName = "decisionForHitorWait()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "hitorwait/Pretracker.swift"
-            timestampString = "505008761.738877"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "85"
-            endingLineNumber = "85"
-            landmarkName = "showNotification(road:decision:)"
+            startingLineNumber = "206"
+            endingLineNumber = "206"
+            landmarkName = "addtoLocationList(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

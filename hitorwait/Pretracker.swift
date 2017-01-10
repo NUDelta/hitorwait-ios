@@ -34,7 +34,7 @@ class Pretracker: NSObject, CLLocationManagerDelegate, UNUserNotificationCenterD
     var hasPosted = false
     var locationCounter = 4
     // 40-50 meters = road segment change
-    let distanceUpdate = 10.0
+    let distanceUpdate = 20.0
     var clLocationList = [CLLocation]()
     
     var locationManager:CLLocationManager?
@@ -48,6 +48,7 @@ class Pretracker: NSObject, CLLocationManagerDelegate, UNUserNotificationCenterD
     var hasDecisions: Bool?
     
     var hitRoads = [String:[Double]]()
+    var allRoads = [String:[Double]]()
     
     override init() {
         super.init()
@@ -141,7 +142,7 @@ class Pretracker: NSObject, CLLocationManagerDelegate, UNUserNotificationCenterD
                             print(json)
                             completion(json)
                             let nc = NotificationCenter.default
-                            let userInfo = ["lat": self.currentLat,"lng": self.currentLng,"road": json["road"]!] as [String : Any]
+                            let userInfo = ["lat": self.currentLocation?.coordinate.latitude,"lng": self.currentLocation?.coordinate.longitude,"road": json["road"]!] as [String : Any]
                             nc.post(name: NSNotification.Name(rawValue: "LocationUpdate"), object: nil, userInfo: userInfo)
                             //                            completion(json)
                         }
@@ -202,7 +203,7 @@ class Pretracker: NSObject, CLLocationManagerDelegate, UNUserNotificationCenterD
         clLocationList.append(location)
         if clLocationList.count >= locationCounter {
             // upload to the server
-//            Location.sharedInstance.postLocation(clLocationList)
+            Location.sharedInstance.postLocation(clLocationList)
             clLocationList = []
         }
     }
@@ -268,6 +269,7 @@ class Pretracker: NSObject, CLLocationManagerDelegate, UNUserNotificationCenterD
     }
     
     func requestHitorWait() {
+        var models:[String: Any]?
         if let loc:CLLocation = currentLocation {
 //            getRoad(loc) {
 //                json in
@@ -289,6 +291,7 @@ class Pretracker: NSObject, CLLocationManagerDelegate, UNUserNotificationCenterD
                 decisions in
                 print(decisions)
                 let decisionTable:[[String: String]] = decisions["decisions"] as! [[String:String]]
+                let valueTable:[[String: Double]] = decisions["values"] as! [[String:Double]]
                 let coordinateTable:[String: Any] = decisions["coordinates"] as! [String: Any]
                 print(decisionTable.count)
 
@@ -300,13 +303,25 @@ class Pretracker: NSObject, CLLocationManagerDelegate, UNUserNotificationCenterD
                             let coord = coordinateTable[idx!]
                             let latlng = coord.value as! [Double]
                             self.hitRoads[road] = latlng
-//                            self.hitRoads[road] = latlng
                             print(latlng)
                             print(self.hitRoads)
-                            self.hasDecisions = true
+                            if !self.hasDecisions! {
+                                self.hasDecisions = true
+                            }
+                            self.allRoads[road] = latlng
+                        } else {
+                            let idx = coordinateTable.index(forKey: road)
+                            let coord = coordinateTable[idx!]
+                            let latlng = coord.value as! [Double]
+                            print(latlng)
+                            self.allRoads[road] = latlng
                         }
                     }
+                    models = decisions["models"] as! [String: Any]
                 }
+                let nc = NotificationCenter.default
+                let userInfo = ["roads": self.allRoads, "models": models, "coordinates": coordinateTable, "values":valueTable.last]
+                nc.post(name: NSNotification.Name(rawValue: "HitRoads"), object: nil, userInfo: userInfo)
                 print(self.hitRoads)
             }
         }
@@ -333,6 +348,13 @@ class Pretracker: NSObject, CLLocationManagerDelegate, UNUserNotificationCenterD
 //        print(lastLocation.coordinate.latitude)
         if checkLocationAccuracy(lastLocation) {
             currentLocation = lastLocation
+            
+            //TODO: comment out for debugging.
+            
+            getRoad(lastLocation) {
+                loc in
+                print(loc)
+            }
             let distance = currentLocation?.distance(from: regionLocation!)
             if Double(distance!) <= 90.0 && didEnterRegion! == false {
                 requestHitorWait()
@@ -353,10 +375,10 @@ class Pretracker: NSObject, CLLocationManagerDelegate, UNUserNotificationCenterD
 //            getRoad(lastLocation)
 //        }
         let nc = NotificationCenter.default
-        let userInfo = ["lat": lastLocation.coordinate.latitude,"lng": lastLocation.coordinate.longitude,"road": "no road"] as [String : Any]
+        let userInfo = ["lat": lastLocation.coordinate.latitude,"lng": lastLocation.coordinate.longitude,"road": ["no road"]] as [String : Any]
         nc.post(name: NSNotification.Name(rawValue: "LocationUpdate"), object: nil, userInfo: userInfo)
         
-        addtoLocationList(lastLocation)
+//        addtoLocationList(lastLocation)
         notify(location: lastLocation, atDistance: 25.0)
         
         // reset timer

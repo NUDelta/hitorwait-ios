@@ -25,13 +25,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "hitorwait/Pretracker.swift"
-            timestampString = "505768037.030097"
+            filePath = "hitorwait/Location.swift"
+            timestampString = "506458802.440645"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "206"
-            endingLineNumber = "206"
-            landmarkName = "addtoLocationList(_:)"
+            startingLineNumber = "221"
+            endingLineNumber = "221"
+            landmarkName = "postLocation(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

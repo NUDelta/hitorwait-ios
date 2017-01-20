@@ -221,18 +221,19 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, MKMapV
             let lat = userInfo["lat"] as? Double
             let lng = userInfo["lng"] as? Double
 
-            let road = userInfo["road"] as? [Any]
-            let road_name = road![0] as! String
-        
-            DispatchQueue.main.async(){
-                self.roadLabel.text = road_name
-            }
-//            }
+            
             let currentLocation = CLLocation(latitude: lat!, longitude: lng!)
             
             let currentCoordinate = CLLocationCoordinate2D(latitude: lat!, longitude: lng!)
-            drawRoads(road: road_name, location: currentCoordinate)
             
+            if let road_name:String = userInfo["road"] as? String {
+                DispatchQueue.main.async(){
+                    self.roadLabel.text = road_name
+                }
+                
+                drawRoads(road: road_name, location: currentCoordinate)
+            }
+
             if !setRegion {
                 let coordinateRegion = MKCoordinateRegionMakeWithDistance(currentLocation.coordinate,
                                                                           regionRadius * 2.0, regionRadius * 2.0)

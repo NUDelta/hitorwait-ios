@@ -32,9 +32,9 @@ class Pretracker: NSObject, CLLocationManagerDelegate, UNUserNotificationCenterD
     var currentLocation: CLLocation?
     
     var hasPosted = false
-    var locationCounter = 4
+    var locationCounter = 20
     // 40-50 meters = road segment change
-    let distanceUpdate = 20.0
+    let distanceUpdate = 30.0
     var clLocationList = [CLLocation]()
     
     var locationManager:CLLocationManager?
@@ -126,7 +126,7 @@ class Pretracker: NSObject, CLLocationManagerDelegate, UNUserNotificationCenterD
         let config = URLSessionConfiguration.default
         let session: URLSession = URLSession(configuration: config)
         
-        let body_str = "user=yk&lat=\(Float(location.coordinate.latitude))&lng=\(Float(location.coordinate.longitude))"
+        let body_str = "user=yk&lat=\(Double(location.coordinate.latitude))&lng=\(Double(location.coordinate.longitude))"
         
         let url = URL(string: "\(API_ADDR)/currentroad?\(body_str)")!
         do {
@@ -174,8 +174,15 @@ class Pretracker: NSObject, CLLocationManagerDelegate, UNUserNotificationCenterD
         }
         
         //TODO: change user to actual username.
+        let date = NSDate()
+        let year = Calendar.current.component(.year, from: date as Date)
+        let month = Calendar.current.component(.month, from: date as Date)
+        let day = Calendar.current.component(.day, from: date as Date)
+        let hour = Calendar.current.component(.hour, from: date as Date)
+        let minute = Calendar.current.component(.minute, from: date as Date)
+        let routeId = "\(year)\(month)\(day)\(hour)\(minute)yk"
+        let json = ["user":"yk","routeId":routeId, "coordinates":arr] as [String : Any]
         
-        let json = ["user":"yk","coordinates":arr] as [String : Any]
         do {
             let jsonData = try JSONSerialization.data(withJSONObject: json, options: .prettyPrinted)
             request.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
@@ -203,7 +210,7 @@ class Pretracker: NSObject, CLLocationManagerDelegate, UNUserNotificationCenterD
         clLocationList.append(location)
         if clLocationList.count >= locationCounter {
             // upload to the server
-            Location.sharedInstance.postLocation(clLocationList)
+            postLocation(clLocationList)
             clLocationList = []
         }
     }
@@ -378,7 +385,7 @@ class Pretracker: NSObject, CLLocationManagerDelegate, UNUserNotificationCenterD
         let userInfo = ["lat": lastLocation.coordinate.latitude,"lng": lastLocation.coordinate.longitude,"road": ["no road"]] as [String : Any]
         nc.post(name: NSNotification.Name(rawValue: "LocationUpdate"), object: nil, userInfo: userInfo)
         
-//        addtoLocationList(lastLocation)
+        addtoLocationList(lastLocation)
         notify(location: lastLocation, atDistance: 25.0)
         
         // reset timer

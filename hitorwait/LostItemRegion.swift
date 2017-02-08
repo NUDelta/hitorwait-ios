@@ -16,6 +16,7 @@ class LostItemRegion: NSObject {
     public var requester:String = ""
     public var lat: Double = 0.0
     public var lon: Double = 0.0
+    public var uid: String = ""
     
     override init(){
         super.init()
@@ -46,6 +47,8 @@ class LostItemRegion: NSObject {
                             let coordinates = loc["coordinates"] as! [Double]
                             self.lat = coordinates[1]
                             self.lon = coordinates[0]
+                            let id_array = json["_id"] as? [String: String]
+                            self.uid = (id_array?["$oid"])!
                             completion(true)
                         }
 

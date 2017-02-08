@@ -10,12 +10,21 @@ import UIKit
 
 class LostItemViewController: UIViewController {
     
-    public var search_region = "1635 Chicago Avenue"
+    var searchRegion: LostItemRegion = LostItemRegion() {
+        didSet {
+            
+//            getItemDetails()
+            requesterNameTextField.text = searchRegion.requester
+            itemTextField.text = searchRegion.item
+            itemDetailTextField.text = searchRegion.itemDetails
+        }
+    }
 
 
     @IBOutlet weak var requesterNameTextField: UILabel!
     @IBOutlet weak var itemTextField: UILabel!
     @IBOutlet weak var itemDetailTextField: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -23,10 +32,10 @@ class LostItemViewController: UIViewController {
         Pretracker.sharedManager
         
         center.addObserver(forName: NSNotification.Name(rawValue: "textFieldUpdate"), object: nil, queue: OperationQueue.main, using: updateTextField)
-        getItemDetails()
+        center.addObserver(forName: NSNotification.Name(rawValue: "SearchRegionUpdate"), object: nil, queue: OperationQueue.main, using: updateSearchRegion)
+//        getItemDetails()
         
         //TODO: add an observer for search region changes from Pretracker.
-        
         
     }
     
@@ -46,7 +55,8 @@ class LostItemViewController: UIViewController {
             
             let lat = currentLocation.coordinate.latitude
             let lon = currentLocation.coordinate.longitude
-            let url : String = "http://127.0.0.1:5000/updateSearch?lat=\(Double(lat))&lon=\(Double(lon))"
+//            let url : String = "http://127.0.0.1:5000/updateSearch?lat=\(Double(lat))&lon=\(Double(lon))"
+            let url : String = "http://127.0.0.1:5000/updateSearch?uid=\(searchRegion.uid)&lat=\(Double(lat))&lon=\(Double(lon))"
             let urlStr : String = url.addingPercentEncoding(withAllowedCharacters:NSCharacterSet.urlQueryAllowed)!
             let searchURL : URL = URL(string: urlStr as String)!
             do {
@@ -79,6 +89,13 @@ class LostItemViewController: UIViewController {
 
     }
     
+    func updateSearchRegion(notification: Notification) -> Void {
+        if let userInfo = notification.userInfo {
+            searchRegion = userInfo["searchRegion"] as! LostItemRegion
+            
+        }
+    }
+    
     func updateTextField(notification: Notification) -> Void {
         if let userInfo = notification.userInfo {
             requesterNameTextField.text = userInfo["requester"] as? String
@@ -98,7 +115,7 @@ class LostItemViewController: UIViewController {
 //        let escapedAddress = search_region.addingPercentEncoding(withAllowedCharacters:NSCharacterSet.urlQueryAllowed)!
 //        print(escapedAddress)
         
-        let url : String = "http://127.0.0.1:5000/getRegions/\(search_region)"
+        let url : String = "http://127.0.0.1:5000/getRegions/\(searchRegion.region)"
         let urlStr : String = url.addingPercentEncoding(withAllowedCharacters:NSCharacterSet.urlQueryAllowed)!
         let searchURL : URL = URL(string: urlStr as String)!
         

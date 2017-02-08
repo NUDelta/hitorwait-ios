@@ -431,8 +431,13 @@ class Pretracker: NSObject, CLLocationManagerDelegate, UNUserNotificationCenterD
                 print(loc)
                 self.itemRegion.getLostItemRegion(lastLocation.coordinate.latitude,lastLocation.coordinate.longitude) { completed in
                     if completed {
-                        print(self.itemRegion.requester)
-                        if self.hasDecisions! != true{
+                        
+                        // store search region
+                        let nc = NotificationCenter.default
+                        let userInfo = ["searchRegion": self.itemRegion] as [String : LostItemRegion]
+                        nc.post(name: NSNotification.Name(rawValue: "SearchRegionUpdate"), object: nil, userInfo: userInfo)
+                        
+                        if self.hasDecisions! != true {
                             self.requestHitorWait(currentRoad: loc["road"] as! String)
                             self.didEnterRegion = true
                         }

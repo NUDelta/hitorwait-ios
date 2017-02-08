@@ -19,6 +19,7 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, MKMapV
     var coordinateTable: [String:[Double]]?
     var valueTable: [String:Double]?
     var hitRoads: [String:[Double]]?
+    var userName:String?
     
     @IBOutlet weak var roadLabel: UILabel!
     let notiCenter = UNUserNotificationCenter.current()
@@ -48,7 +49,8 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, MKMapV
 //        let date = NSDate()
 //        print(date)
         
-        
+        print(userName)
+        Pretracker.sharedManager
         
         let initialLocation = CLLocation(latitude: 42.065335, longitude: -87.682367)
         let coordinateRegion = MKCoordinateRegionMakeWithDistance(initialLocation.coordinate,
@@ -83,7 +85,10 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, MKMapV
             
             for road in roads.keys {
                 let coordinate:CLLocationCoordinate2D = CLLocationCoordinate2D(latitude: roads[road]![0], longitude: roads[road]![1])
-                let annotationDescription = "\(road): \((valueTable?[road])!)"
+                var annotationDescription = ""
+                if let value = valueTable?[road] {
+                    annotationDescription = "\(road): \(value)"
+                }
                 let newRoad = HitRoad.init(annotationDescription, coordinate: coordinate)
                 mapView.addAnnotation(newRoad)
             }

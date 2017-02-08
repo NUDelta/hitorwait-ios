@@ -24,6 +24,9 @@
 		5958C1A61E089EE30086B1FE /* hitorwaitUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5958C1A51E089EE30086B1FE /* hitorwaitUITests.swift */; };
 		5958C1B51E08A9A20086B1FE /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5958C1B41E08A9A20086B1FE /* User.swift */; };
 		5958C1B71E08BA330086B1FE /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5958C1B61E08BA330086B1FE /* Location.swift */; };
+		59CF630B1E47DA3F00108F3B /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59CF630A1E47DA3F00108F3B /* LogInViewController.swift */; };
+		59CF630D1E47E0B000108F3B /* LostItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59CF630C1E47E0B000108F3B /* LostItemViewController.swift */; };
+		59CF630F1E4A757700108F3B /* LostItemRegion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59CF630E1E4A757700108F3B /* LostItemRegion.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -69,6 +72,9 @@
 		5958C1A71E089EE30086B1FE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5958C1B41E08A9A20086B1FE /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		5958C1B61E08BA330086B1FE /* Location.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
+		59CF630A1E47DA3F00108F3B /* LogInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
+		59CF630C1E47E0B000108F3B /* LostItemViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LostItemViewController.swift; sourceTree = "<group>"; };
+		59CF630E1E4A757700108F3B /* LostItemRegion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LostItemRegion.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -129,11 +135,11 @@
 			isa = PBXGroup;
 			children = (
 				5958C1851E089EE30086B1FE /* AppDelegate.swift */,
-				5958C1871E089EE30086B1FE /* ViewController.swift */,
 				594D05841E1F057600061E93 /* HitRoad.swift */,
+				59CF63111E4A759200108F3B /* VCs */,
+				59CF63101E4A757F00108F3B /* Models */,
 				5958C1B61E08BA330086B1FE /* Location.swift */,
 				59063C3C1E15BA1A00659527 /* Pretracker.swift */,
-				5958C1B41E08A9A20086B1FE /* User.swift */,
 				5958C1891E089EE30086B1FE /* Main.storyboard */,
 				5958C1B31E089EF90086B1FE /* Supporting files */,
 				59063C521E15E02100659527 /* BackgroundTaskManager */,
@@ -173,6 +179,25 @@
 				59063C381E15B93C00659527 /* hitorwait-Bridging-Header.h */,
 			);
 			name = "Supporting files";
+			sourceTree = "<group>";
+		};
+		59CF63101E4A757F00108F3B /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				59CF630E1E4A757700108F3B /* LostItemRegion.swift */,
+				5958C1B41E08A9A20086B1FE /* User.swift */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		59CF63111E4A759200108F3B /* VCs */ = {
+			isa = PBXGroup;
+			children = (
+				5958C1871E089EE30086B1FE /* ViewController.swift */,
+				59CF630C1E47E0B000108F3B /* LostItemViewController.swift */,
+				59CF630A1E47DA3F00108F3B /* LogInViewController.swift */,
+			);
+			name = VCs;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -243,9 +268,14 @@
 				TargetAttributes = {
 					5958C1811E089EE30086B1FE = {
 						CreatedOnToolsVersion = 8.1;
-						DevelopmentTeam = W4E2C6X642;
+						DevelopmentTeam = 823S57WQK3;
 						LastSwiftMigration = 0820;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
 					};
 					5958C1951E089EE30086B1FE = {
 						CreatedOnToolsVersion = 8.1;
@@ -320,6 +350,9 @@
 				59063C3B1E15B93D00659527 /* BackgroundTaskManager.m in Sources */,
 				5958C1881E089EE30086B1FE /* ViewController.swift in Sources */,
 				5958C1861E089EE30086B1FE /* AppDelegate.swift in Sources */,
+				59CF630F1E4A757700108F3B /* LostItemRegion.swift in Sources */,
+				59CF630D1E47E0B000108F3B /* LostItemViewController.swift in Sources */,
+				59CF630B1E47DA3F00108F3B /* LogInViewController.swift in Sources */,
 				594D05851E1F057600061E93 /* HitRoad.swift in Sources */,
 				5958C1B71E08BA330086B1FE /* Location.swift in Sources */,
 				5958C1B51E08A9A20086B1FE /* User.swift in Sources */,
@@ -473,15 +506,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Northwestern University";
+				DEVELOPMENT_TEAM = 823S57WQK3;
 				INFOPLIST_FILE = hitorwait/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = edu.northwestern.delta.hitorwait;
+				PRODUCT_BUNDLE_IDENTIFIER = edu.northwestern.delta.O;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE = "ccd55835-c338-4e10-942f-8cab0cca532d";
+				PROVISIONING_PROFILE_SPECIFIER = "Delta Lab O";
 				SWIFT_OBJC_BRIDGING_HEADER = "hitorwait/hitorwait-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
@@ -493,13 +526,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Northwestern University";
+				DEVELOPMENT_TEAM = 823S57WQK3;
 				INFOPLIST_FILE = hitorwait/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = edu.northwestern.delta.hitorwait;
+				PRODUCT_BUNDLE_IDENTIFIER = edu.northwestern.delta.O;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "ccd55835-c338-4e10-942f-8cab0cca532d";
+				PROVISIONING_PROFILE_SPECIFIER = "Delta Lab O";
 				SWIFT_OBJC_BRIDGING_HEADER = "hitorwait/hitorwait-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};

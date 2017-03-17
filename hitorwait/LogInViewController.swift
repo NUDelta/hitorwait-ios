@@ -39,11 +39,19 @@ class LogInViewController: UIViewController {
         if let identifier = segue.identifier {
             switch identifier {
                 case "Login Segue":
-                    if let vc = segue.destination  as? ViewController {
-                        vc.userName = userNameTextField.text
+//                    if let vc = segue.destination  as? ViewController {
+//                        vc.userName = userNameTextField.text
+//                        let defaults = UserDefaults.standard
+//                        defaults.set(userNameTextField.text,forKey: "username")
+//                        let username = (defaults.value(forKey: "username") as? String)!
+//                        print(username)
+//                     }
+                    if let username = userNameTextField.text {
                         let defaults = UserDefaults.standard
-                        defaults.set(userNameTextField.text,forKey: "username")
-                }
+                        defaults.set(username,forKey: "username")
+                        print(username)
+                    }
+                
                 default: break
             }
         }

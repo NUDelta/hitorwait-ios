@@ -28,6 +28,7 @@
 		59CF630D1E47E0B000108F3B /* LostItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59CF630C1E47E0B000108F3B /* LostItemViewController.swift */; };
 		59CF630F1E4A757700108F3B /* LostItemRegion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59CF630E1E4A757700108F3B /* LostItemRegion.swift */; };
 		59CF63131E54C66500108F3B /* RequestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59CF63121E54C66500108F3B /* RequestViewController.swift */; };
+		59F5ACD31E81ADDC0095F0B4 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F5ACD21E81ADDC0095F0B4 /* Config.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -77,6 +78,7 @@
 		59CF630C1E47E0B000108F3B /* LostItemViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LostItemViewController.swift; sourceTree = "<group>"; };
 		59CF630E1E4A757700108F3B /* LostItemRegion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LostItemRegion.swift; sourceTree = "<group>"; };
 		59CF63121E54C66500108F3B /* RequestViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestViewController.swift; sourceTree = "<group>"; };
+		59F5ACD21E81ADDC0095F0B4 /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -138,6 +140,7 @@
 			children = (
 				5958C1851E089EE30086B1FE /* AppDelegate.swift */,
 				594D05841E1F057600061E93 /* HitRoad.swift */,
+				59F5ACD21E81ADDC0095F0B4 /* Config.swift */,
 				59CF63111E4A759200108F3B /* VCs */,
 				59CF63101E4A757F00108F3B /* Models */,
 				5958C1B61E08BA330086B1FE /* Location.swift */,
@@ -354,6 +357,7 @@
 				5958C1881E089EE30086B1FE /* ViewController.swift in Sources */,
 				5958C1861E089EE30086B1FE /* AppDelegate.swift in Sources */,
 				59CF630F1E4A757700108F3B /* LostItemRegion.swift in Sources */,
+				59F5ACD31E81ADDC0095F0B4 /* Config.swift in Sources */,
 				59CF630D1E47E0B000108F3B /* LostItemViewController.swift in Sources */,
 				59CF630B1E47DA3F00108F3B /* LogInViewController.swift in Sources */,
 				594D05851E1F057600061E93 /* HitRoad.swift in Sources */,

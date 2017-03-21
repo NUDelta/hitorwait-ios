@@ -30,7 +30,7 @@ class RequestViewController: UIViewController {
     @IBAction func requestButtonClick(_ sender: UIButton) {
         let config = URLSessionConfiguration.default
         let session: URLSession = URLSession(configuration: config)
-        var request = URLRequest(url: URL(string: "http://127.0.0.1:5000/regions")!)
+        var request = URLRequest(url: URL(string: "\(Config.URL)/regions")!)
         
         request.httpMethod = "POST"
         print(username)

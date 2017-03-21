@@ -11,9 +11,7 @@ import UIKit
 import CoreLocation
 import UserNotifications
 
-//let API_ADDR = "http://hitorwait.herokuapp.com"
-let API_ADDR = "http://127.0.0.1:5000"
-
+let API_ADDR = Config.URL
 
 class Pretracker: NSObject, CLLocationManagerDelegate, UNUserNotificationCenterDelegate{
     // static let sharedInstance: Pretracker = {
@@ -385,8 +383,22 @@ class Pretracker: NSObject, CLLocationManagerDelegate, UNUserNotificationCenterD
     func uploadLocations() {
         print(NSDate())
         print("it is working")
-        postLocation(clLocationList)
-        clLocationList = []
+        if clLocationList.count > 0 {
+            postLocation(clLocationList)
+            clLocationList = []
+        }
+    }
+    
+    func lastUpdated() {
+        if locationTimer != nil {
+            locationTimer!.invalidate()
+            locationTimer = nil
+            print("reset location timer")
+            //            print(clLocationList)
+        }
+        
+        locationTimer = Timer.scheduledTimer(timeInterval: timeIntervalForTrip, target: self, selector: #selector(uploadLocations), userInfo: nil, repeats: false)
+        print("started timer for interval check \(NSDate())")
     }
     
     func checkTimeInterval() {
@@ -394,7 +406,7 @@ class Pretracker: NSObject, CLLocationManagerDelegate, UNUserNotificationCenterD
         if let lastUpdatedTime = currentLocation?.timestamp {
             let timeInterval = currentTime.timeIntervalSince(lastUpdatedTime)
             // if timeInterval is greater than x (10 minutes?), then upload locations to the server.
-                if timeInterval >= 60 {
+                if timeInterval >= timeIntervalForTrip {
                     print(timeInterval)
                         // upload to the server
                     postLocation(clLocationList)
@@ -471,20 +483,12 @@ class Pretracker: NSObject, CLLocationManagerDelegate, UNUserNotificationCenterD
         let userInfo = ["lat": lastLocation.coordinate.latitude,"lng": lastLocation.coordinate.longitude,"road": ["no road"]] as [String : Any]
         nc.post(name: NSNotification.Name(rawValue: "LocationUpdate"), object: nil, userInfo: userInfo)
         
-        addtoLocationList(lastLocation)
         
         let distance = calculateDistance(currentLocation: lastLocation)
         
-        if locationTimer != nil {
-            locationTimer!.invalidate()
-            locationTimer = nil
-            print("reset location timer")
-//            print(clLocationList)
-        } else {
-            if distance >= 20.0 {
-                locationTimer = Timer.scheduledTimer(timeInterval: 20, target: self, selector: #selector(uploadLocations), userInfo: nil, repeats: false)
-                print("started timer for interval check \(NSDate())")
-            }
+        if distance >= distanceUpdate {
+            addtoLocationList(lastLocation)
+            lastUpdated()
         }
         
         notify(location: lastLocation, atDistance: 25.0)

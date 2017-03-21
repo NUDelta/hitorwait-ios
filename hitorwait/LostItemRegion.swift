@@ -25,7 +25,7 @@ class LostItemRegion: NSObject {
     public func getLostItemRegion(_ lat: Double,_ lon: Double, completion: @escaping (Bool)->()) {
         let config = URLSessionConfiguration.default
         let session: URLSession = URLSession(configuration: config)
-        let url = URL(string: "http://localhost:5000/getNearbySearchRegion?lat=\(lat)&lon=\(lon)")!
+        let url = URL(string: "\(Config.URL)/getNearbySearchRegion?lat=\(lat)&lon=\(lon)")!
         let task = session.dataTask(with: url, completionHandler: {
             (data, response, error) in
             if error != nil {

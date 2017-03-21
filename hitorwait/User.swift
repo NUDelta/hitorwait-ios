@@ -15,7 +15,7 @@ class User: NSObject, URLSessionTaskDelegate {
     func getUser(_ userId: String, completion: @escaping ([String:Any]) -> ()){
         let config = URLSessionConfiguration.default
         let session: URLSession = URLSession(configuration: config)
-        let url = URL(string: "http://192.168.1.65:5000/routes/\(userId)")!
+        let url = URL(string: "\(Config.URL)/routes/\(userId)")!
         let task = session.dataTask(with: url, completionHandler: {
             (data, response, error) in
             if error != nil {

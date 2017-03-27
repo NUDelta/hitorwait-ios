@@ -15,7 +15,7 @@ struct Config {
 
     init() {
         if Config.DEBUG {
-            Config.URL = "http://127.0.0.1:5000"
+            Config.URL = "http://10.105.168.75:5000"
         } else {
             Config.URL = "http://hitorwait.herokuapp.com"
         }

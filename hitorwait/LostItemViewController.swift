@@ -55,7 +55,7 @@ class LostItemViewController: UIViewController {
             
             let lat = currentLocation.coordinate.latitude
             let lon = currentLocation.coordinate.longitude
-//            let url : String = "http://127.0.0.1:5000/updateSearch?lat=\(Double(lat))&lon=\(Double(lon))"
+//            let url : String = "\(Config.URL)/updateSearch?lat=\(Double(lat))&lon=\(Double(lon))"
             let url : String = "\(Config.URL)/updateSearch?uid=\(searchRegion.uid)&lat=\(Double(lat))&lon=\(Double(lon))"
             let urlStr : String = url.addingPercentEncoding(withAllowedCharacters:NSCharacterSet.urlQueryAllowed)!
             let searchURL : URL = URL(string: urlStr as String)!

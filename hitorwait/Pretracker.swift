@@ -74,6 +74,7 @@ class Pretracker: NSObject, CLLocationManagerDelegate, UNUserNotificationCenterD
         // location manager initialization
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+        locationManager.activityType = .fitness
         locationManager.distanceFilter = CLLocationDistance(distanceUpdate)
         if CLLocationManager.authorizationStatus() == .notDetermined {
             locationManager.requestAlwaysAuthorization()
@@ -82,7 +83,7 @@ class Pretracker: NSObject, CLLocationManagerDelegate, UNUserNotificationCenterD
         
         // We should always enable this for background location tracking.
         locationManager.allowsBackgroundLocationUpdates = true
-        locationManager.pausesLocationUpdatesAutomatically = false
+        locationManager.pausesLocationUpdatesAutomatically = true
         locationManager.startUpdatingLocation()
         
         // TODO: need to change the logic for finding lost item region.
@@ -434,6 +435,39 @@ class Pretracker: NSObject, CLLocationManagerDelegate, UNUserNotificationCenterD
 //        print(lastLocation.coordinate.latitude)
         if checkLocationAccuracy(lastLocation) {
             currentLocation = lastLocation
+            let lat = (currentLocation?.coordinate.latitude)!
+            let lon = (currentLocation?.coordinate.longitude)!
+            let config = URLSessionConfiguration.default
+            let session: URLSession = URLSession(configuration: config)
+            
+            let date = Date().timeIntervalSince1970
+            
+            let user = defaults.value(forKey: "username")!
+            let url : String = "\(Config.URL)/currentlocation?lat=\(lat)&lon=\(lon)&date=\(Int(date))&user=\((CURRENT_USER?.username)!)"
+            
+            let urlStr : String = url.addingPercentEncoding(withAllowedCharacters:NSCharacterSet.urlQueryAllowed)!
+            let searchURL : URL = URL(string: urlStr as String)!
+            do {
+                let task = session.dataTask(with: searchURL, completionHandler: {
+                    (data, response, error) in
+                    if error != nil {
+                        print(error?.localizedDescription)
+                    }
+                    if data != nil {
+                        do {
+                            if let json = try JSONSerialization.jsonObject(with: data!, options: .allowFragments) as? [String: Any] {
+                                print(json)
+                            }
+                        } catch let error as NSError {
+                            print(error)
+                        }
+                    }
+                })
+                task.resume()
+                
+            } catch let error as NSError{
+                print(error)
+            }
             //checkLocations()
             //TODO: comment out for debugging.
             

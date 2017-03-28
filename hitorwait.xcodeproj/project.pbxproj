@@ -14,6 +14,10 @@
 		59063C4F1E15DAC900659527 /* route3.gpx in Resources */ = {isa = PBXBuildFile; fileRef = 59063C4A1E15DAC900659527 /* route3.gpx */; };
 		59063C501E15DAC900659527 /* tolab.gpx in Resources */ = {isa = PBXBuildFile; fileRef = 59063C4B1E15DAC900659527 /* tolab.gpx */; };
 		59063C511E15DAC900659527 /* route5.gpx in Resources */ = {isa = PBXBuildFile; fileRef = 59063C4C1E15DAC900659527 /* route5.gpx */; };
+		590C48B51E8B1079004D43AE /* search.png in Resources */ = {isa = PBXBuildFile; fileRef = 590C48B41E8B1079004D43AE /* search.png */; };
+		590C48B71E8B118C004D43AE /* lost.png in Resources */ = {isa = PBXBuildFile; fileRef = 590C48B61E8B118C004D43AE /* lost.png */; };
+		590C48B91E8B11DC004D43AE /* settings.png in Resources */ = {isa = PBXBuildFile; fileRef = 590C48B81E8B11DC004D43AE /* settings.png */; };
+		590C48BB1E8B1386004D43AE /* admin.png in Resources */ = {isa = PBXBuildFile; fileRef = 590C48BA1E8B1386004D43AE /* admin.png */; };
 		593823E11E889B3100D8BF78 /* CommManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 593823E01E889B3100D8BF78 /* CommManager.swift */; };
 		594D05851E1F057600061E93 /* HitRoad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594D05841E1F057600061E93 /* HitRoad.swift */; };
 		5958C1861E089EE30086B1FE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5958C1851E089EE30086B1FE /* AppDelegate.swift */; };
@@ -29,6 +33,8 @@
 		59CF630D1E47E0B000108F3B /* LostItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59CF630C1E47E0B000108F3B /* LostItemViewController.swift */; };
 		59CF630F1E4A757700108F3B /* LostItemRegion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59CF630E1E4A757700108F3B /* LostItemRegion.swift */; };
 		59CF63131E54C66500108F3B /* RequestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59CF63121E54C66500108F3B /* RequestViewController.swift */; };
+		59F2B9AB1E8AD256004F351E /* tabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F2B9AA1E8AD256004F351E /* tabBarViewController.swift */; };
+		59F2B9AD1E8AD713004F351E /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F2B9AC1E8AD713004F351E /* SettingsViewController.swift */; };
 		59F5ACD31E81ADDC0095F0B4 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F5ACD21E81ADDC0095F0B4 /* Config.swift */; };
 /* End PBXBuildFile section */
 
@@ -59,6 +65,10 @@
 		59063C4A1E15DAC900659527 /* route3.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = route3.gpx; sourceTree = "<group>"; };
 		59063C4B1E15DAC900659527 /* tolab.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = tolab.gpx; sourceTree = "<group>"; };
 		59063C4C1E15DAC900659527 /* route5.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = route5.gpx; sourceTree = "<group>"; };
+		590C48B41E8B1079004D43AE /* search.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = search.png; sourceTree = "<group>"; };
+		590C48B61E8B118C004D43AE /* lost.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lost.png; sourceTree = "<group>"; };
+		590C48B81E8B11DC004D43AE /* settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settings.png; sourceTree = "<group>"; };
+		590C48BA1E8B1386004D43AE /* admin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = admin.png; sourceTree = "<group>"; };
 		593823E01E889B3100D8BF78 /* CommManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommManager.swift; sourceTree = "<group>"; };
 		594D05841E1F057600061E93 /* HitRoad.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HitRoad.swift; sourceTree = "<group>"; };
 		595176441E83115800C5B7B8 /* hitorwait.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = hitorwait.entitlements; sourceTree = "<group>"; };
@@ -81,6 +91,8 @@
 		59CF630C1E47E0B000108F3B /* LostItemViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LostItemViewController.swift; sourceTree = "<group>"; };
 		59CF630E1E4A757700108F3B /* LostItemRegion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LostItemRegion.swift; sourceTree = "<group>"; };
 		59CF63121E54C66500108F3B /* RequestViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestViewController.swift; sourceTree = "<group>"; };
+		59F2B9AA1E8AD256004F351E /* tabBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = tabBarViewController.swift; sourceTree = "<group>"; };
+		59F2B9AC1E8AD713004F351E /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		59F5ACD21E81ADDC0095F0B4 /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -177,6 +189,10 @@
 		5958C1B31E089EF90086B1FE /* Supporting files */ = {
 			isa = PBXGroup;
 			children = (
+				590C48BA1E8B1386004D43AE /* admin.png */,
+				590C48B61E8B118C004D43AE /* lost.png */,
+				590C48B81E8B11DC004D43AE /* settings.png */,
+				590C48B41E8B1079004D43AE /* search.png */,
 				5958C18C1E089EE30086B1FE /* Assets.xcassets */,
 				5958C18E1E089EE30086B1FE /* LaunchScreen.storyboard */,
 				59063C481E15DAC900659527 /* route1.gpx */,
@@ -205,8 +221,10 @@
 			children = (
 				5958C1871E089EE30086B1FE /* ViewController.swift */,
 				59CF630C1E47E0B000108F3B /* LostItemViewController.swift */,
+				59F2B9AA1E8AD256004F351E /* tabBarViewController.swift */,
 				59CF630A1E47DA3F00108F3B /* LogInViewController.swift */,
 				59CF63121E54C66500108F3B /* RequestViewController.swift */,
+				59F2B9AC1E8AD713004F351E /* SettingsViewController.swift */,
 			);
 			name = VCs;
 			sourceTree = "<group>";
@@ -329,7 +347,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				59063C4D1E15DAC900659527 /* route1.gpx in Resources */,
+				590C48B71E8B118C004D43AE /* lost.png in Resources */,
+				590C48B51E8B1079004D43AE /* search.png in Resources */,
+				590C48B91E8B11DC004D43AE /* settings.png in Resources */,
 				5958C1901E089EE30086B1FE /* LaunchScreen.storyboard in Resources */,
+				590C48BB1E8B1386004D43AE /* admin.png in Resources */,
 				59063C501E15DAC900659527 /* tolab.gpx in Resources */,
 				59063C4E1E15DAC900659527 /* route2.gpx in Resources */,
 				5958C18D1E089EE30086B1FE /* Assets.xcassets in Resources */,
@@ -368,8 +390,10 @@
 				59CF630F1E4A757700108F3B /* LostItemRegion.swift in Sources */,
 				59F5ACD31E81ADDC0095F0B4 /* Config.swift in Sources */,
 				59CF630D1E47E0B000108F3B /* LostItemViewController.swift in Sources */,
+				59F2B9AD1E8AD713004F351E /* SettingsViewController.swift in Sources */,
 				59CF630B1E47DA3F00108F3B /* LogInViewController.swift in Sources */,
 				594D05851E1F057600061E93 /* HitRoad.swift in Sources */,
+				59F2B9AB1E8AD256004F351E /* tabBarViewController.swift in Sources */,
 				59CF63131E54C66500108F3B /* RequestViewController.swift in Sources */,
 				5958C1B71E08BA330086B1FE /* Location.swift in Sources */,
 				5958C1B51E08A9A20086B1FE /* User.swift in Sources */,

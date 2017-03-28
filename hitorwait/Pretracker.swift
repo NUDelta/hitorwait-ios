@@ -40,7 +40,7 @@ class Pretracker: NSObject, CLLocationManagerDelegate, UNUserNotificationCenterD
     var locationManager:CLLocationManager?
     var hasNotified:Bool = false
     
-    var itemRegion = LostItemRegion()
+//    var itemRegion = LostItemRegion()
     
     // search region's lat and lon for debugging. Use LostItemRegion instead.
     // comment this out
@@ -251,7 +251,7 @@ class Pretracker: NSObject, CLLocationManagerDelegate, UNUserNotificationCenterD
     
     func checkLocationAccuracy(_ location: CLLocation) -> Bool {
         let age = -location.timestamp.timeIntervalSinceNow
-        if (location.horizontalAccuracy < 0 || location.horizontalAccuracy > 65 || age > 5) {
+        if (location.horizontalAccuracy < 0 || location.horizontalAccuracy > 65 || age > 60) {
             return false
         }
         return true
@@ -551,42 +551,42 @@ class Pretracker: NSObject, CLLocationManagerDelegate, UNUserNotificationCenterD
 // copied from the below stackoverflow answer.
 // http://stackoverflow.com/questions/27723912/swift-get-request-with-parameters
 
-extension Dictionary {
-    
-    /// Build string representation of HTTP parameter dictionary of keys and objects
-    ///
-    /// This percent escapes in compliance with RFC 3986
-    ///
-    /// http://www.ietf.org/rfc/rfc3986.txt
-    ///
-    /// :returns: String representation in the form of key1=value1&key2=value2 where the keys and values are percent escaped
-    
-    func stringFromHttpParameters() -> String {
-        let parameterArray = self.map { (key, value) -> String in
-            let percentEscapedKey = (key as! String).addingPercentEncodingForURLQueryValue()!
-            let percentEscapedValue = (value as! String).addingPercentEncodingForURLQueryValue()!
-            return "\(percentEscapedKey)=\(percentEscapedValue)"
-        }
-        
-        return parameterArray.joined(separator: "&")
-    }
-    
-}
+//extension Dictionary {
+//    
+//    /// Build string representation of HTTP parameter dictionary of keys and objects
+//    ///
+//    /// This percent escapes in compliance with RFC 3986
+//    ///
+//    /// http://www.ietf.org/rfc/rfc3986.txt
+//    ///
+//    /// :returns: String representation in the form of key1=value1&key2=value2 where the keys and values are percent escaped
+//    
+//    func stringFromHttpParameters() -> String {
+//        let parameterArray = self.map { (key, value) -> String in
+//            let percentEscapedKey = (key as! String).addingPercentEncodingForURLQueryValue()!
+//            let percentEscapedValue = (value as! String).addingPercentEncodingForURLQueryValue()!
+//            return "\(percentEscapedKey)=\(percentEscapedValue)"
+//        }
+//        
+//        return parameterArray.joined(separator: "&")
+//    }
+//    
+//}
+//
+//extension String {
+//    
+//    /// Percent escapes values to be added to a URL query as specified in RFC 3986
+//    ///
+//    /// This percent-escapes all characters besides the alphanumeric character set and "-", ".", "_", and "~".
+//    ///
+//    /// http://www.ietf.org/rfc/rfc3986.txt
+//    ///
+//    /// :returns: Returns percent-escaped string.
+//    
+//    func addingPercentEncodingForURLQueryValue() -> String? {
+//        let allowedCharacters = CharacterSet(charactersIn: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._~")
+//        
+//        return self.addingPercentEncoding(withAllowedCharacters: allowedCharacters)
+//    }
 
-extension String {
-    
-    /// Percent escapes values to be added to a URL query as specified in RFC 3986
-    ///
-    /// This percent-escapes all characters besides the alphanumeric character set and "-", ".", "_", and "~".
-    ///
-    /// http://www.ietf.org/rfc/rfc3986.txt
-    ///
-    /// :returns: Returns percent-escaped string.
-    
-    func addingPercentEncodingForURLQueryValue() -> String? {
-        let allowedCharacters = CharacterSet(charactersIn: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._~")
-        
-        return self.addingPercentEncoding(withAllowedCharacters: allowedCharacters)
-    }
-    
-}
+//}

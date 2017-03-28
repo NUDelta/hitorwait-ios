@@ -46,6 +46,7 @@ class LogInViewController: UIViewController {
                     do {
                         if let json = try JSONSerialization.jsonObject(with: data!, options: .allowFragments) as? [String: Any] {
                             print(json)
+                            CURRENT_USER = User(username: username, tokenId: tokenId)
                         }
                     } catch let error as NSError {
                         print(error)

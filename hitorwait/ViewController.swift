@@ -28,10 +28,15 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, MKMapV
 
     @IBOutlet weak var mapView: MKMapView!
     
+    @IBOutlet weak var movementModelControl: UISegmentedControl!
+    
     @IBAction func didClickButton(_ sender: UIButton) {
         print("clicked")
     }
     
+    @IBAction func movementModelAction(_ sender: UISegmentedControl) {
+        print(sender.titleForSegment(at: 0))
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
 //        Pretracker.sharedInstance.changeAccuracy(accuracy: kCLLocationAccuracyBestForNavigation, distanceFilter: 1)
@@ -50,7 +55,7 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, MKMapV
 //        print(date)
         
         print(userName)
-        Pretracker.sharedManager
+        Pretracker.sharedManager.locationManager?.requestLocation()
         
         let initialLocation = CLLocation(latitude: 42.065335, longitude: -87.682367)
         let coordinateRegion = MKCoordinateRegionMakeWithDistance(initialLocation.coordinate,

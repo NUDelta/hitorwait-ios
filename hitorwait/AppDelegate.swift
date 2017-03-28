@@ -57,6 +57,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
 //            self.window?.makeKeyAndVisible()
 //            self.window?.rootViewController?.present(tabbarVC, animated: true, completion: nil)
             print("no username stored")
+            CURRENT_USER = User(username: defaults.value(forKey: "username") as! String, tokenId: defaults.value(forKey: "tokenId") as! String)
         }
         
         return true
@@ -97,10 +98,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         if (userInfo.index(forKey: "decisions") != nil) {
             print("hit or wait decision is here")
             print(userInfo["decisions"])
+            
+            // TODO: how to deal with hit-or-wait decisions?
+            //
         }
         
 //        Pretracker.sharedManager.locationManager!.startUpdatingLocation()
         Pretracker.sharedManager.locationManager!.requestLocation()
+        
+        //TODO: need notification center to observer the didupdatelocation
+        
         if let currentLocation = Pretracker.sharedManager.currentLocation {
             let lat = currentLocation.coordinate.latitude
             let lon = currentLocation.coordinate.longitude

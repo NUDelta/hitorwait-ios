@@ -8,34 +8,14 @@
 
 import UIKit
 
-class User: NSObject, URLSessionTaskDelegate {
-
-    var userName: String = "yk"
+class User: NSObject {
+    let username: String
+    let tokenId: String
+    var location: Location?
+    var hasDecision: Bool?
     
-    func getUser(_ userId: String, completion: @escaping ([String:Any]) -> ()){
-        let config = URLSessionConfiguration.default
-        let session: URLSession = URLSession(configuration: config)
-        let url = URL(string: "\(Config.URL)/routes/\(userId)")!
-        let task = session.dataTask(with: url, completionHandler: {
-            (data, response, error) in
-            if error != nil {
-                print(error?.localizedDescription as Any)
-            } else {
-//                if data != nil {
-//                    completion(data)
-//                }
-                do {
-//                    print(data as Any)
-                    if let json = try JSONSerialization.jsonObject(with: data!, options: .allowFragments) as? [String: Any] {
-//                        print(json)
-                        completion(json)
-                    }
-                } catch {
-                    print("error in JSONSerialization")
-                }
-            }
-        })
-        task.resume()
+    init(username: String, tokenId: String) {
+        self.username = username
+        self.tokenId = tokenId
     }
-    
 }

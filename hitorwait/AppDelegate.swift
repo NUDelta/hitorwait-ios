@@ -19,7 +19,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-//        _ = Location.sharedInstance
         _ = Config()
         center.requestAuthorization(options: options) { (granted, error) in
             let generalCategory = UNNotificationCategory(identifier: "general", actions: [], intentIdentifiers: [], options: .customDismissAction)
@@ -46,28 +45,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         }
         
         if (defaults.object(forKey: "username") != nil) {
-            print(defaults.value(forKey: "username"))
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
             let tabbarVC = storyboard.instantiateViewController(withIdentifier: "tabbarVC")
             self.window?.makeKeyAndVisible()
             self.window?.rootViewController?.present(tabbarVC, animated: true, completion: nil)
         } else {
+            // commment out after debugging.
 //            let storyboard = UIStoryboard(name: "Main", bundle: nil)
 //            let tabbarVC = storyboard.instantiateViewController(withIdentifier: "tabbarVC")
 //            self.window?.makeKeyAndVisible()
 //            self.window?.rootViewController?.present(tabbarVC, animated: true, completion: nil)
-            print("no username stored")
             CURRENT_USER = User(username: defaults.value(forKey: "username") as! String, tokenId: defaults.value(forKey: "tokenId") as! String)
         }
         
         return true
     }
 
-    func registerForPushNotifications(application: UIApplication) {
-        let settings = UIUserNotificationSettings(types: [.badge, .sound, .alert], categories: nil)
-        application.registerUserNotificationSettings(settings)
-    }
-    
     func application(_ application: UIApplication, didRegister notificationSettings: UIUserNotificationSettings) {
         if notificationSettings.types != .none {
             application.registerForRemoteNotifications()
@@ -78,9 +71,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         let deviceTokenString = deviceToken.reduce("", {$0 + String(format: "%02X", $1)})
         print(deviceTokenString)
         defaults.set(deviceTokenString, forKey: "tokenId")
-//        sendUserToken(deviceTokenString)
     }
-//    
+
+    // we don't use this when there is a background task needs to be handled.
 //    func application(_ application: UIApplication, didReceiveRemoteNotification data: [AnyHashable : Any]) {
 //        print("Push notification received: \(data)")
 //        Pretracker.sharedManager.locationManager!.startUpdatingLocation()
@@ -93,96 +86,57 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
 
     // we only have 30 seconds here.
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
-        print("received notification")
-        
+
         if (userInfo.index(forKey: "decisions") != nil) {
             print("hit or wait decision is here")
             print(userInfo["decisions"])
             
             // TODO: how to deal with hit-or-wait decisions?
-            //
+            let decisionTable:[[String: String]] = userInfo["decisions"] as! [[String:String]]
+            let coordinateTable:[String: Any] = userInfo["coordinates"] as! [String: Any]
+            let models = userInfo["models"] as! [String: Any]
+            
+            
+            if let decision = decisionTable.last {
+                for road in decision.keys {
+                    print(road)
+                    if decision[road] == "Hit" {
+                        print("\(decision[road]) on the road \(road))")
+                        if let idx = coordinateTable.index(forKey: road){
+                            let coord = coordinateTable[idx]
+                            let latlng = coord.value as! [Double]
+                            //                        self.hitRoads[road] = latlng
+                            //                        print(latlng)
+                            //                        print(self.hitRoads)
+                            //                        if !self.hasDecisions! {
+                            //                            self.hasDecisions = true
+                            //                        }
+                            //                        self.allRoads[road] = latlng
+                        } else {
+                            print("not in the coordinate table")
+                        }
+                    } else {
+                        if let idx = coordinateTable.index(forKey: road) {
+                            let coord = coordinateTable[idx]
+                            let latlng = coord.value as! [Double]
+                            print(latlng)
+                        } else {
+                            print("not in the coordinate table")
+                        }
+//                        self.allRoads[road] = latlng
+                    }
+                }
+                let nc = NotificationCenter.default
+                let allRoads = [HitRoad]()
+//                let models = [String:Any]()
+                
+                //TODO: should add models and values for admin view.
+                let userInfo = ["coordinates": coordinateTable, "decisions":decisionTable, "models": models] as [String : Any]
+                nc.post(name: NSNotification.Name(rawValue: "HitRoads"), object: nil, userInfo: userInfo)
+            }
         }
         
-//        Pretracker.sharedManager.locationManager!.startUpdatingLocation()
         Pretracker.sharedManager.locationManager!.requestLocation()
-        
-        //TODO: need notification center to observer the didupdatelocation
-        
-        if let currentLocation = Pretracker.sharedManager.currentLocation {
-            let lat = currentLocation.coordinate.latitude
-            let lon = currentLocation.coordinate.longitude
-            let config = URLSessionConfiguration.default
-            let session: URLSession = URLSession(configuration: config)
-            
-            let date = Date().timeIntervalSince1970
-            
-            let user = defaults.value(forKey: "username")!
-            let url : String = "\(Config.URL)/currentlocation?lat=\(lat)&lon=\(lon)&date=\(Int(date))&user=\(user)"
-            
-            let urlStr : String = url.addingPercentEncoding(withAllowedCharacters:NSCharacterSet.urlQueryAllowed)!
-            let searchURL : URL = URL(string: urlStr as String)!
-            do {
-                let task = session.dataTask(with: searchURL, completionHandler: {
-                    (data, response, error) in
-                    if error != nil {
-                        print(error?.localizedDescription)
-                    }
-                    if data != nil {
-                        do {
-                            if let json = try JSONSerialization.jsonObject(with: data!, options: .allowFragments) as? [String: Any] {
-                                print(json)
-                                completionHandler(UIBackgroundFetchResult.noData)
-                            }
-                        } catch let error as NSError {
-                            print(error)
-                        }
-                    }
-                })
-                task.resume()
-                
-            } catch let error as NSError{
-                print(error)
-            }
-        } else {
-            let lat = 0.0
-            let lon = 0.0
-            let config = URLSessionConfiguration.default
-            let session: URLSession = URLSession(configuration: config)
-            
-            let date = Date().timeIntervalSince1970
-            
-            let user = defaults.value(forKey: "username")!
-            let url : String = "\(Config.URL)/currentlocation?lat=\(lat)&lon=\(lon)&date=\(Int(date))&user=\(user)"
-            
-            let urlStr : String = url.addingPercentEncoding(withAllowedCharacters:NSCharacterSet.urlQueryAllowed)!
-            let searchURL : URL = URL(string: urlStr as String)!
-            do {
-                let task = session.dataTask(with: searchURL, completionHandler: {
-                    (data, response, error) in
-                    if error != nil {
-                        print(error?.localizedDescription)
-                    }
-                    if data != nil {
-                        do {
-                            if let json = try JSONSerialization.jsonObject(with: data!, options: .allowFragments) as? [String: Any] {
-                                print(json)
-                                completionHandler(UIBackgroundFetchResult.noData)
-                            }
-                        } catch let error as NSError {
-                            print(error)
-                        }
-                    }
-                })
-                task.resume()
-                
-            } catch let error as NSError{
-                print(error)
-            }
-        }
-    }
-    
-    //MARK: send user's current location
-    func sendCurrentLocation(lat: Float, lon: Float) {
 
     }
     
@@ -191,35 +145,35 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         print("APNs registration failed: \(error)")
     }
     
-    func sendUserToken(_ tokenId: String) {
-        let config = URLSessionConfiguration.default
-        let session: URLSession = URLSession(configuration: config)
-
-        let url : String = "\(Config.URL)/user?tokenId=\(tokenId)"
-        let urlStr : String = url.addingPercentEncoding(withAllowedCharacters:NSCharacterSet.urlQueryAllowed)!
-        let searchURL : URL = URL(string: urlStr as String)!
-        do {
-            let task = session.dataTask(with: searchURL, completionHandler: {
-                (data, response, error) in
-                if error != nil {
-                    print(error?.localizedDescription)
-                }
-                if data != nil {
-                    do {
-                        if let json = try JSONSerialization.jsonObject(with: data!, options: .allowFragments) as? [String: Any] {
-                            print(json)
-                        }
-                    } catch let error as NSError {
-                        print(error)
-                    }
-                }
-            })
-            task.resume()
-            
-        } catch let error as NSError{
-            print(error)
-        }
-    }
+//    func sendUserToken(_ tokenId: String) {
+//        let config = URLSessionConfiguration.default
+//        let session: URLSession = URLSession(configuration: config)
+//
+//        let url : String = "\(Config.URL)/user?tokenId=\(tokenId)"
+//        let urlStr : String = url.addingPercentEncoding(withAllowedCharacters:NSCharacterSet.urlQueryAllowed)!
+//        let searchURL : URL = URL(string: urlStr as String)!
+//        do {
+//            let task = session.dataTask(with: searchURL, completionHandler: {
+//                (data, response, error) in
+//                if error != nil {
+//                    print(error?.localizedDescription)
+//                }
+//                if data != nil {
+//                    do {
+//                        if let json = try JSONSerialization.jsonObject(with: data!, options: .allowFragments) as? [String: Any] {
+//                            print(json)
+//                        }
+//                    } catch let error as NSError {
+//                        print(error)
+//                    }
+//                }
+//            })
+//            task.resume()
+//            
+//        } catch let error as NSError{
+//            print(error)
+//        }
+//    }
     
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
@@ -241,8 +195,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
 
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
-        //TODO: Let's add notification here.
-        print("before termination")
         showNotificationForTermination()
     }
     
@@ -256,9 +208,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         
         let request = UNNotificationRequest(identifier: "local", content: content, trigger: trigger)
         
-        let notiCenter = UNUserNotificationCenter.current()
-        
-        notiCenter.add(request) { (error) in
+        center.add(request) { (error) in
             if let theError = error {
                 print(theError.localizedDescription)
             }

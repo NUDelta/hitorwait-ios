@@ -39,22 +39,7 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, MKMapV
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-//        Pretracker.sharedInstance.changeAccuracy(accuracy: kCLLocationAccuracyBestForNavigation, distanceFilter: 1)
-        // Do any additional setup after loading the view, typically from a nib.
-//        var user = User()
-//        user.getUser("yk") { json in
-////            print("json data is \(json["coordinates"])")
-//            let array:[Any] = json["coordinates"] as! [Any]
-//            for a in array {
-////                print(a)
-//                let arr:[Double] = a as! [Double]
-//                print(arr[0])
-//            }
-//        }
-//        let date = NSDate()
-//        print(date)
         
-        print(userName)
         Pretracker.sharedManager.locationManager?.requestLocation()
         
         let initialLocation = CLLocation(latitude: 42.065335, longitude: -87.682367)
@@ -63,13 +48,14 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, MKMapV
         mapView.setRegion(coordinateRegion, animated: false)
         mapView.showsUserLocation = true
         mapView.delegate = self
-//
+
         let center = NotificationCenter.default
-//
-//        // important to use OperationQueue.main for main queue to prevent "This application is modifying the autolayout engine from a background thread after the engine was accessed from the main thread. This can lead to engine corruption and weird crashes."
-//        
+
+        // important to use OperationQueue.main for main queue to prevent "This application is modifying the autolayout engine from a background thread after the engine was accessed from the main thread. This can lead to engine corruption and weird crashes."
+        
+        // Observer to LocationUpdate in Pretracker's didUpdateLocations delegat method.
         center.addObserver(forName: Notification.Name(rawValue:"LocationUpdate"), object: nil, queue: OperationQueue.main , using: catchNotification)
-        center.addObserver(forName: Notification.Name(rawValue:"HitRoads"), object: nil, queue: OperationQueue.main, using: catchHitRoadsNotification)
+//        center.addObserver(forName: Notification.Name(rawValue:"HitRoads"), object: nil, queue: OperationQueue.main, using: catchHitRoadsNotification)
 //        addModelOverlay()
         
         let coordinate = CLLocationCoordinate2D(latitude: 42.04783640895302, longitude: -87.67942116214238)

@@ -19,8 +19,8 @@ class Pretracker: NSObject, CLLocationManagerDelegate, UNUserNotificationCenterD
     //    return instance
     //}()
     
-    let backgroundTaskManager = BackgroundTaskManager()
-    let bgTask: BackgroundTaskManager = BackgroundTaskManager.shared()
+//    let backgroundTaskManager = BackgroundTaskManager()
+//    let bgTask: BackgroundTaskManager = BackgroundTaskManager.shared()
     
     // background task timers
     var bgTimer: Timer? = Timer()
@@ -32,7 +32,7 @@ class Pretracker: NSObject, CLLocationManagerDelegate, UNUserNotificationCenterD
     var currentLocation: CLLocation?
     
     var hasPosted = false
-    var locationCounter = 20
+    
     // 40-50 meters = road segment change
     let distanceUpdate = 30.0
     var clLocationList = [CLLocation]()
@@ -61,12 +61,13 @@ class Pretracker: NSObject, CLLocationManagerDelegate, UNUserNotificationCenterD
     
     let defaults = UserDefaults.standard
     
+    public static let sharedManager = Pretracker()
+
     override init() {
         super.init()
-        username = (defaults.value(forKey: "username") as? String)!
-        print(username)
         
         self.locationManager = CLLocationManager()
+        
         guard let locationManager = self.locationManager else {
             return
         }
@@ -84,9 +85,10 @@ class Pretracker: NSObject, CLLocationManagerDelegate, UNUserNotificationCenterD
         // We should always enable this for background location tracking.
         locationManager.allowsBackgroundLocationUpdates = true
         locationManager.pausesLocationUpdatesAutomatically = true
-        locationManager.startUpdatingLocation()
+//        locationManager.startUpdatingLocation()
         
         // TODO: need to change the logic for finding lost item region.
+        // call getNearbySearchRegions
 //        let center = CLLocationCoordinate2D(latitude: regionLat, longitude: regionLng)
 //        let region = CLCircularRegion(center: center, radius: 100, identifier: "region")
 //        regionLocation = CLLocation(latitude: regionLat, longitude: regionLng)
@@ -98,7 +100,6 @@ class Pretracker: NSObject, CLLocationManagerDelegate, UNUserNotificationCenterD
         UNUserNotificationCenter.current().delegate = self
     }
     
-    public static let sharedManager = Pretracker()
     
     //MARK: notification methods
     func showNotification(road: String, decision: String) {
@@ -121,30 +122,9 @@ class Pretracker: NSObject, CLLocationManagerDelegate, UNUserNotificationCenterD
         }
     }
     
-    func notify(location: CLLocation, atDistance distance: Double) {
-        // get rid of inaccurate location updates
-        if checkLocationAccuracy(location) {
-//            let center = CLLocationCoordinate2D(latitude: lat, longitude: lng)
-//            let region = CLCircularRegion(center: center, radius: 100, identifier: "region")
-//            
-//            let distanceToRegion = location.distance(from: CLLocation(latitude: region.center.latitude, longitude: region.center.longitude))
-//            
-//            print("distance to region is \(distanceToRegion)")
-//            
-//            if distanceToRegion <= distance {
-//                showNotification()
-//            }
-        }
-    }
-    
     //MARK: HiorWait APIs
     // input: current location, return road name
     func getRoad(_ location: CLLocation, completion: @escaping ([String:Any])->()) {
-//        let config = URLSessionConfiguration.default
-//        let session: URLSession = URLSession(configuration: config)
-//        
-//        let body_str = "user=\(username)&lat=\(Double(location.coordinate.latitude))&lng=\(Double(location.coordinate.longitude))"
-        
         let json = ["user":username,"lat": Double(location.coordinate.latitude), "lon": Double(location.coordinate.longitude)] as! [String : Any]
         CommManager.instance.urlRequest(route: "currentroad", parameters: json) {
             json in
@@ -154,35 +134,6 @@ class Pretracker: NSObject, CLLocationManagerDelegate, UNUserNotificationCenterD
             nc.post(name: NSNotification.Name(rawValue: "LocationUpdate"), object: nil, userInfo: userInfo)
             //                            completion(json)
         }
-//
-//        let url = URL(string: "\(API_ADDR)/currentroad?\(body_str)")!
-//        do {
-//            let task = session.dataTask(with: url, completionHandler: {
-//                (data, response, error) in
-//                if error != nil {
-//                    print(error?.localizedDescription)
-//                }
-//                //                print(response)
-//                if data != nil {
-//                    do {
-//                        if let json = try JSONSerialization.jsonObject(with: data!, options: .allowFragments) as? [String: Any] {
-//                            print(json)
-//                            completion(json)
-//                            let nc = NotificationCenter.default
-//                            let userInfo = ["lat": self.currentLocation?.coordinate.latitude,"lng": self.currentLocation?.coordinate.longitude,"road": json["road"]!] as [String : Any]
-//                            nc.post(name: NSNotification.Name(rawValue: "LocationUpdate"), object: nil, userInfo: userInfo)
-//                            //                            completion(json)
-//                        }
-//                    } catch {
-//                        print("serialization error")
-//                    }
-//                }
-//            })
-//            task.resume()
-//            
-//        } catch {
-//            print("error")
-//        }
     }
     
     //TODO: need to create a class for get and post HTTP methods. Basically I'm copying and pasting this function everywhere.
@@ -281,7 +232,6 @@ class Pretracker: NSObject, CLLocationManagerDelegate, UNUserNotificationCenterD
     }
     
     //MARK: Hit or Wait methods
-    
     /*
      currently, we are calling the following method everytime there is a location changes.
      */
@@ -302,33 +252,12 @@ class Pretracker: NSObject, CLLocationManagerDelegate, UNUserNotificationCenterD
         }
     }
     
+    // We don't use this function anymore.
     func requestHitorWait(currentRoad: String) {
         var models:[String: Any]?
         if let loc:CLLocation = currentLocation {
-            //MARK: uncomment this to get current road
-//            getRoad(loc) {
-//                json in
-//                print(json)
-//                let road = json["road"] as! [Any]
-//                let currentRoad = road[0] as! String
-//                print(currentRoad)
-//                let param = ["user":"yk", "road": currentRoad]
-//                self.getRequest(url:"how", parameters: param as [String: Any]) {
-//                    decisions in
-//                    print(decisions)
-//                }
-//            }
+            let param = ["user": (CURRENT_USER?.username)!, "road": currentRoad, "lat":String(describing: (currentLocation?.coordinate.latitude)),"lon":String(describing: (currentLocation?.coordinate.longitude))]
             
-            //TODO: change currentRoad to Search road
-    
-//            let currentRoad = "1633 Chicago Avenue"
-            
-            print(currentRoad)
-            
-            //TODO: change username here.
-            let param = ["user":"yk", "road": currentRoad, "lat":String(describing: (currentLocation?.coordinate.latitude)),"lon":String(describing: (currentLocation?.coordinate.longitude))]
-            
-            //let body_str = "user=yk&lat=\(Double((currentLocation?.coordinate.latitude)!))&lng=\(Double((currentLocation?.coordinate.longitude)!))&road=\(currentRoad)"
             
             //let url = URL(string: "\(API_ADDR)/currentroad?\(body_str)")!
             
@@ -373,49 +302,6 @@ class Pretracker: NSObject, CLLocationManagerDelegate, UNUserNotificationCenterD
     }
     
     // MARK: location manager delegate methods
-    func checkLocations() {
-//        if locationTimer == nil {
-//            locationTimer = Timer.scheduledTimer(timeInterval: 50, target: self, selector: #selector(uploadLocations), userInfo: nil, repeats: false)
-//        }
-    }
-    
-    func uploadLocations() {
-        print(NSDate())
-        print("it is working")
-        if clLocationList.count > 0 {
-            postLocation(clLocationList)
-            clLocationList = []
-        }
-    }
-    
-    func lastUpdated() {
-//        if locationTimer != nil {
-//            locationTimer!.invalidate()
-//            locationTimer = nil
-//            print("reset location timer")
-//            //            print(clLocationList)
-//        }
-        
-//        locationTimer = Timer.scheduledTimer(timeInterval: timeIntervalForTrip, target: self, selector: #selector(uploadLocations), userInfo: nil, repeats: false)
-//        print("started timer for interval check \(NSDate())")
-    }
-    
-    func checkTimeInterval() {
-//        let currentTime = NSDate()
-//        if let lastUpdatedTime = currentLocation?.timestamp {
-//            let timeInterval = currentTime.timeIntervalSince(lastUpdatedTime)
-//            // if timeInterval is greater than x (10 minutes?), then upload locations to the server.
-//                if timeInterval >= timeIntervalForTrip {
-//                    print(timeInterval)
-//                        // upload to the server
-//                    postLocation(clLocationList)
-//                    clLocationList = []
-//                    locationTimer?.invalidate()
-//                    locationTimer = nil
-//                }
-//        }
-    }
-    
 //    func locationManager(_ manager: CLLocationManager, didEnterRegion region: CLRegion) {
 //        locationManager?.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
 //        locationManager?.distanceFilter = CLLocationDistance(distanceUpdate)
@@ -430,67 +316,21 @@ class Pretracker: NSObject, CLLocationManagerDelegate, UNUserNotificationCenterD
     
     public func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let lastLocation = locations.last!
-        
-        didEnterRegion = true
-//        print(lastLocation.coordinate.latitude)
+    
         if checkLocationAccuracy(lastLocation) {
             currentLocation = lastLocation
             let lat = (currentLocation?.coordinate.latitude)!
             let lon = (currentLocation?.coordinate.longitude)!
-            let config = URLSessionConfiguration.default
-            let session: URLSession = URLSession(configuration: config)
-            
             let date = Date().timeIntervalSince1970
             
-            let user = defaults.value(forKey: "username")!
-            let url : String = "\(Config.URL)/currentlocation?lat=\(lat)&lon=\(lon)&date=\(Int(date))&user=\((CURRENT_USER?.username)!)"
+            //call CommManager POST method
+            let params = ["user": (CURRENT_USER?.username)!, "lat": lastLocation.coordinate.latitude, "lon": lastLocation.coordinate.longitude, "date":date] as [String : Any]
+            CommManager.instance.urlRequest(route: "currentlocation", parameters: params, completion: {
+                json in
+                print(json)
+            })
             
-            let urlStr : String = url.addingPercentEncoding(withAllowedCharacters:NSCharacterSet.urlQueryAllowed)!
-            let searchURL : URL = URL(string: urlStr as String)!
-            do {
-                let task = session.dataTask(with: searchURL, completionHandler: {
-                    (data, response, error) in
-                    if error != nil {
-                        print(error?.localizedDescription)
-                    }
-                    if data != nil {
-                        do {
-                            if let json = try JSONSerialization.jsonObject(with: data!, options: .allowFragments) as? [String: Any] {
-                                print(json)
-                            }
-                        } catch let error as NSError {
-                            print(error)
-                        }
-                    }
-                })
-                task.resume()
-                
-            } catch let error as NSError{
-                print(error)
-            }
-            //checkLocations()
-            //TODO: comment out for debugging.
-            
-            getRoad(lastLocation) {
-                loc in
-                print(loc)
-//                self.itemRegion.getLostItemRegion(lastLocation.coordinate.latitude,lastLocation.coordinate.longitude) { completed in
-//                    if completed {
-//                        
-//                        // store search region
-//                        let nc = NotificationCenter.default
-//                        let userInfo = ["searchRegion": self.itemRegion] as [String : LostItemRegion]
-//                        nc.post(name: NSNotification.Name(rawValue: "SearchRegionUpdate"), object: nil, userInfo: userInfo)
-//                        
-//                        if self.hasDecisions! != true {
-//                            self.requestHitorWait(currentRoad: loc["road"] as! String)
-//                            self.didEnterRegion = true
-//                        }
-//                    } else {
-//                        print("no result")
-//                    }
-//                }
-            }
+            getRoad(lastLocation){_ in}
             
             //TODO: replace this with getNearbySearchRegions
 //            let distance = currentLocation?.distance(from: regionLocation!)
@@ -502,16 +342,11 @@ class Pretracker: NSObject, CLLocationManagerDelegate, UNUserNotificationCenterD
             
         }
         
-        if didEnterRegion! && hasDecisions! && !hasNotified {
-            decisionForHitorWait()
-        }
-        
-        // TODO: call functions with last location updates
-        
-
-//        if distance >= 30 {
-//            getRoad(lastLocation)
+//        if didEnterRegion! && hasDecisions! && !hasNotified {
+//            decisionForHitorWait()
 //        }
+     
+        // receive observers with LocationUpdate
         let nc = NotificationCenter.default
         let userInfo = ["lat": lastLocation.coordinate.latitude,"lng": lastLocation.coordinate.longitude,"road": ["no road"]] as [String : Any]
         nc.post(name: NSNotification.Name(rawValue: "LocationUpdate"), object: nil, userInfo: userInfo)
@@ -524,9 +359,8 @@ class Pretracker: NSObject, CLLocationManagerDelegate, UNUserNotificationCenterD
             //lastUpdated()
         }
         
-        notify(location: lastLocation, atDistance: 100.0)
-        
-        // reset timer
+
+        // all the stuff for background tasking.
 //        if (bgTimer != nil) {
 //            return
 //        }
@@ -550,6 +384,8 @@ class Pretracker: NSObject, CLLocationManagerDelegate, UNUserNotificationCenterD
     }
     
     public func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        // TODO: send error messages to DBs
+        
         print("Location manager failed with error: \(error)")
     }
     
@@ -580,47 +416,3 @@ class Pretracker: NSObject, CLLocationManagerDelegate, UNUserNotificationCenterD
     }
     
 }
-
-// TODO: come back later to change this
-// copied from the below stackoverflow answer.
-// http://stackoverflow.com/questions/27723912/swift-get-request-with-parameters
-
-//extension Dictionary {
-//    
-//    /// Build string representation of HTTP parameter dictionary of keys and objects
-//    ///
-//    /// This percent escapes in compliance with RFC 3986
-//    ///
-//    /// http://www.ietf.org/rfc/rfc3986.txt
-//    ///
-//    /// :returns: String representation in the form of key1=value1&key2=value2 where the keys and values are percent escaped
-//    
-//    func stringFromHttpParameters() -> String {
-//        let parameterArray = self.map { (key, value) -> String in
-//            let percentEscapedKey = (key as! String).addingPercentEncodingForURLQueryValue()!
-//            let percentEscapedValue = (value as! String).addingPercentEncodingForURLQueryValue()!
-//            return "\(percentEscapedKey)=\(percentEscapedValue)"
-//        }
-//        
-//        return parameterArray.joined(separator: "&")
-//    }
-//    
-//}
-//
-//extension String {
-//    
-//    /// Percent escapes values to be added to a URL query as specified in RFC 3986
-//    ///
-//    /// This percent-escapes all characters besides the alphanumeric character set and "-", ".", "_", and "~".
-//    ///
-//    /// http://www.ietf.org/rfc/rfc3986.txt
-//    ///
-//    /// :returns: Returns percent-escaped string.
-//    
-//    func addingPercentEncodingForURLQueryValue() -> String? {
-//        let allowedCharacters = CharacterSet(charactersIn: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._~")
-//        
-//        return self.addingPercentEncoding(withAllowedCharacters: allowedCharacters)
-//    }
-
-//}

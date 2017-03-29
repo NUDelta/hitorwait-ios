@@ -28,7 +28,7 @@
 		5958C19B1E089EE30086B1FE /* hitorwaitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5958C19A1E089EE30086B1FE /* hitorwaitTests.swift */; };
 		5958C1A61E089EE30086B1FE /* hitorwaitUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5958C1A51E089EE30086B1FE /* hitorwaitUITests.swift */; };
 		5958C1B51E08A9A20086B1FE /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5958C1B41E08A9A20086B1FE /* User.swift */; };
-		5958C1B71E08BA330086B1FE /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5958C1B61E08BA330086B1FE /* Location.swift */; };
+		59ABF0C71E8C3CC20043C49C /* ContextManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59ABF0C61E8C3CC20043C49C /* ContextManager.swift */; };
 		59CF630B1E47DA3F00108F3B /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59CF630A1E47DA3F00108F3B /* LogInViewController.swift */; };
 		59CF630D1E47E0B000108F3B /* LostItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59CF630C1E47E0B000108F3B /* LostItemViewController.swift */; };
 		59CF630F1E4A757700108F3B /* LostItemRegion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59CF630E1E4A757700108F3B /* LostItemRegion.swift */; };
@@ -86,7 +86,7 @@
 		5958C1A51E089EE30086B1FE /* hitorwaitUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = hitorwaitUITests.swift; sourceTree = "<group>"; };
 		5958C1A71E089EE30086B1FE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5958C1B41E08A9A20086B1FE /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
-		5958C1B61E08BA330086B1FE /* Location.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
+		59ABF0C61E8C3CC20043C49C /* ContextManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContextManager.swift; sourceTree = "<group>"; };
 		59CF630A1E47DA3F00108F3B /* LogInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
 		59CF630C1E47E0B000108F3B /* LostItemViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LostItemViewController.swift; sourceTree = "<group>"; };
 		59CF630E1E4A757700108F3B /* LostItemRegion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LostItemRegion.swift; sourceTree = "<group>"; };
@@ -153,13 +153,12 @@
 		5958C1841E089EE30086B1FE /* hitorwait */ = {
 			isa = PBXGroup;
 			children = (
-				595176441E83115800C5B7B8 /* hitorwait.entitlements */,
 				5958C1851E089EE30086B1FE /* AppDelegate.swift */,
 				59F5ACD21E81ADDC0095F0B4 /* Config.swift */,
 				59CF63111E4A759200108F3B /* VCs */,
 				59CF63101E4A757F00108F3B /* Models */,
-				5958C1B61E08BA330086B1FE /* Location.swift */,
 				59063C3C1E15BA1A00659527 /* Pretracker.swift */,
+				59ABF0C61E8C3CC20043C49C /* ContextManager.swift */,
 				593823E01E889B3100D8BF78 /* CommManager.swift */,
 				5958C1891E089EE30086B1FE /* Main.storyboard */,
 				59063C521E15E02100659527 /* BackgroundTaskManager */,
@@ -189,21 +188,38 @@
 		5958C1B31E089EF90086B1FE /* Supporting files */ = {
 			isa = PBXGroup;
 			children = (
+				595176441E83115800C5B7B8 /* hitorwait.entitlements */,
+				59ABF0C81E8C49EB0043C49C /* Images */,
+				5958C18C1E089EE30086B1FE /* Assets.xcassets */,
+				5958C18E1E089EE30086B1FE /* LaunchScreen.storyboard */,
+				59ABF0C91E8C49F30043C49C /* Simulation Routes */,
+				5958C1911E089EE30086B1FE /* Info.plist */,
+				59063C381E15B93C00659527 /* hitorwait-Bridging-Header.h */,
+			);
+			name = "Supporting files";
+			sourceTree = "<group>";
+		};
+		59ABF0C81E8C49EB0043C49C /* Images */ = {
+			isa = PBXGroup;
+			children = (
 				590C48BA1E8B1386004D43AE /* admin.png */,
 				590C48B61E8B118C004D43AE /* lost.png */,
 				590C48B81E8B11DC004D43AE /* settings.png */,
 				590C48B41E8B1079004D43AE /* search.png */,
-				5958C18C1E089EE30086B1FE /* Assets.xcassets */,
-				5958C18E1E089EE30086B1FE /* LaunchScreen.storyboard */,
+			);
+			name = Images;
+			sourceTree = "<group>";
+		};
+		59ABF0C91E8C49F30043C49C /* Simulation Routes */ = {
+			isa = PBXGroup;
+			children = (
 				59063C481E15DAC900659527 /* route1.gpx */,
 				59063C491E15DAC900659527 /* route2.gpx */,
 				59063C4A1E15DAC900659527 /* route3.gpx */,
 				59063C4B1E15DAC900659527 /* tolab.gpx */,
 				59063C4C1E15DAC900659527 /* route5.gpx */,
-				5958C1911E089EE30086B1FE /* Info.plist */,
-				59063C381E15B93C00659527 /* hitorwait-Bridging-Header.h */,
 			);
-			name = "Supporting files";
+			name = "Simulation Routes";
 			sourceTree = "<group>";
 		};
 		59CF63101E4A757F00108F3B /* Models */ = {
@@ -395,8 +411,8 @@
 				594D05851E1F057600061E93 /* HitRoad.swift in Sources */,
 				59F2B9AB1E8AD256004F351E /* tabBarViewController.swift in Sources */,
 				59CF63131E54C66500108F3B /* RequestViewController.swift in Sources */,
-				5958C1B71E08BA330086B1FE /* Location.swift in Sources */,
 				5958C1B51E08A9A20086B1FE /* User.swift in Sources */,
+				59ABF0C71E8C3CC20043C49C /* ContextManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -9,6 +9,7 @@
 import UIKit
 
 var CURRENT_USER:User?
+var SEARCH_REGIONS = [LostItemRegion]()
 
 class tabBarViewController: UITabBarController {
 

@@ -11,7 +11,6 @@ import UIKit
 class User: NSObject {
     let username: String
     let tokenId: String
-    var location: Location?
     var hasDecision: Bool?
     
     init(username: String, tokenId: String) {

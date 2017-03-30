@@ -40,7 +40,7 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, MKMapV
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        Pretracker.sharedManager.locationManager?.requestLocation()
+//        Pretracker.sharedManager.locationManager?.requestLocation()
         
         let initialLocation = CLLocation(latitude: 42.065335, longitude: -87.682367)
         let coordinateRegion = MKCoordinateRegionMakeWithDistance(initialLocation.coordinate,

@@ -20,6 +20,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         _ = Config()
+        Pretracker.sharedManager.locationManager?.startUpdatingLocation()
+
         center.requestAuthorization(options: options) { (granted, error) in
             let generalCategory = UNNotificationCategory(identifier: "general", actions: [], intentIdentifiers: [], options: .customDismissAction)
             self.center.setNotificationCategories([generalCategory])
@@ -137,7 +139,66 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         }
         
         Pretracker.sharedManager.locationManager!.requestLocation()
+        
+        if let currentLocation = Pretracker.sharedManager.currentLocation {
+            let lat = currentLocation.coordinate.latitude
+            let lon = currentLocation.coordinate.longitude
+            let date = Date().timeIntervalSince1970
 
+            let params = ["user": (CURRENT_USER?.username)!, "lat": lat, "lon": lon, "date":date] as [String : Any]
+            CommManager.instance.urlRequest(route: "currentlocation", parameters: params, completion: {
+                json in
+                print(json)
+                // need to add this for handling background fetch.
+                completionHandler(UIBackgroundFetchResult.noData)
+            })
+//            let lat = currentLocation.coordinate.latitude
+//            let lon = currentLocation.coordinate.longitude
+//            let config = URLSessionConfiguration.default
+//            let session: URLSession = URLSession(configuration: config)
+//            
+//            let date = Date().timeIntervalSince1970
+//            
+//            let user = defaults.value(forKey: "username")!
+//            let url : String = "\(Config.URL)/currentlocation?lat=\(lat)&lon=\(lon)&date=\(Int(date))&user=\(user)"
+//            
+//            let urlStr : String = url.addingPercentEncoding(withAllowedCharacters:NSCharacterSet.urlQueryAllowed)!
+//            let searchURL : URL = URL(string: urlStr as String)!
+//            do {
+//                let task = session.dataTask(with: searchURL, completionHandler: {
+//                    (data, response, error) in
+//                    if error != nil {
+//                        print(error?.localizedDescription)
+//                    }
+//                    if data != nil {
+//                        do {
+//                            if let json = try JSONSerialization.jsonObject(with: data!, options: .allowFragments) as? [String: Any] {
+//                                print(json)
+//                                completionHandler(UIBackgroundFetchResult.noData)
+//                            }
+//                        } catch let error as NSError {
+//                            print(error)
+//                        }
+//                    }
+//                })
+//                task.resume()
+//                
+//            } catch let error as NSError{
+//                print(error)
+//            }
+        }
+        
+        //call CommManager POST method
+//        if let currentLocation = Pretracker.sharedManager.currentLocation {
+        //        let date = Date().timeIntervalSince1970
+//            let lat = currentLocation.coordinate.latitude
+//            let lon = currentLocation.coordinate.longitude
+//            let params = ["user": (CURRENT_USER?.username)!, "lat": lat, "lon": lon, "date":date] as [String : Any]
+//            CommManager.instance.urlRequest(route: "currentlocation", parameters: params, completion: {
+//                json in
+//                print(json)
+//            })
+//        }
     }
     
     func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {

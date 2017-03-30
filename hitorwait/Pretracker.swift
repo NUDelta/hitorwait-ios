@@ -203,7 +203,7 @@ class Pretracker: NSObject, CLLocationManagerDelegate, UNUserNotificationCenterD
     
     func checkLocationAccuracy(_ location: CLLocation) -> Bool {
         let age = -location.timestamp.timeIntervalSinceNow
-        if (location.horizontalAccuracy < 0 || location.horizontalAccuracy > 65 || age > 300) {
+        if (location.horizontalAccuracy < 0 || location.horizontalAccuracy > 65 || age > 60) {
             return false
         }
         return true
@@ -316,10 +316,10 @@ class Pretracker: NSObject, CLLocationManagerDelegate, UNUserNotificationCenterD
     
     public func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let lastLocation = locations.last!
-        currentLocation = lastLocation
 
         //call CommManager POST method
         if checkLocationAccuracy(lastLocation) {
+            currentLocation = lastLocation
 //            //call CommManager POST method
 //            let params = ["user": (CURRENT_USER?.username)!, "lat": lastLocation.coordinate.latitude, "lon": lastLocation.coordinate.longitude, "date":date] as [String : Any]
 //            CommManager.instance.urlRequest(route: "currentlocation", parameters: params, completion: {

@@ -41,6 +41,10 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, MKMapV
         super.viewDidLoad()
         
 //        Pretracker.sharedManager.locationManager?.requestLocation()
+        let defaults = UserDefaults.standard
+        if let userName = defaults.value(forKey: "username") {
+            CURRENT_USER = User(username: userName as! String, tokenId: defaults.value(forKey: "tokenId") as! String)
+        }
         
         let initialLocation = CLLocation(latitude: 42.065335, longitude: -87.682367)
         let coordinateRegion = MKCoordinateRegionMakeWithDistance(initialLocation.coordinate,

@@ -3,4 +3,6 @@
 - Search, Deepz
 - Settings, unlimicon
 - Admin, Gregor Cresnar
+- Hit, Neha Kapadne
+- Wait,creative outlet
 

@@ -20,7 +20,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         _ = Config()
-        Pretracker.sharedManager.locationManager?.startUpdatingLocation()
 
         center.requestAuthorization(options: options) { (granted, error) in
             let generalCategory = UNNotificationCategory(identifier: "general", actions: [], intentIdentifiers: [], options: .customDismissAction)
@@ -51,13 +50,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             let tabbarVC = storyboard.instantiateViewController(withIdentifier: "tabbarVC")
             self.window?.makeKeyAndVisible()
             self.window?.rootViewController?.present(tabbarVC, animated: true, completion: nil)
+            CURRENT_USER = User(username: defaults.value(forKey: "username") as! String, tokenId: defaults.value(forKey: "tokenId") as! String)
+
         } else {
             // commment out after debugging.
 //            let storyboard = UIStoryboard(name: "Main", bundle: nil)
 //            let tabbarVC = storyboard.instantiateViewController(withIdentifier: "tabbarVC")
 //            self.window?.makeKeyAndVisible()
 //            self.window?.rootViewController?.present(tabbarVC, animated: true, completion: nil)
-            CURRENT_USER = User(username: defaults.value(forKey: "username") as! String, tokenId: defaults.value(forKey: "tokenId") as! String)
         }
         
         return true
@@ -145,7 +145,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             let lon = currentLocation.coordinate.longitude
             let date = Date().timeIntervalSince1970
 
-            let params = ["user": (CURRENT_USER?.username)!, "lat": lat, "lon": lon, "date":date] as [String : Any]
+            let params = ["user": (CURRENT_USER?.username)! ?? "", "lat": lat, "lon": lon, "date":date] as [String : Any]
             CommManager.instance.urlRequest(route: "currentlocation", parameters: params, completion: {
                 json in
                 print(json)

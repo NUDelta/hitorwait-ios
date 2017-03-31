@@ -83,7 +83,6 @@ class LostItemViewController: UIViewController {
     @IBAction func didNotFindItemButtonClicked(_ sender: UIButton) {
         itemNotFound()
         //TODO: update search counts.
-        CommManager.instance
 
 //        print(Pretracker.sharedManager.currentLocation)
 //        if let currentLocation = Pretracker.sharedManager.currentLocation {

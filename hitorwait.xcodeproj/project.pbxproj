@@ -28,7 +28,9 @@
 		5958C19B1E089EE30086B1FE /* hitorwaitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5958C19A1E089EE30086B1FE /* hitorwaitTests.swift */; };
 		5958C1A61E089EE30086B1FE /* hitorwaitUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5958C1A51E089EE30086B1FE /* hitorwaitUITests.swift */; };
 		5958C1B51E08A9A20086B1FE /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5958C1B41E08A9A20086B1FE /* User.swift */; };
+		5990D2821E8F08F300ABE381 /* yk_0.gpx in Resources */ = {isa = PBXBuildFile; fileRef = 5990D2811E8F08F300ABE381 /* yk_0.gpx */; };
 		59ABF0C71E8C3CC20043C49C /* ContextManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59ABF0C61E8C3CC20043C49C /* ContextManager.swift */; };
+		59ABF0CB1E8D720C0043C49C /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 59ABF0CA1E8D720C0043C49C /* Icon.png */; };
 		59CF630B1E47DA3F00108F3B /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59CF630A1E47DA3F00108F3B /* LogInViewController.swift */; };
 		59CF630D1E47E0B000108F3B /* LostItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59CF630C1E47E0B000108F3B /* LostItemViewController.swift */; };
 		59CF630F1E4A757700108F3B /* LostItemRegion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59CF630E1E4A757700108F3B /* LostItemRegion.swift */; };
@@ -52,6 +54,27 @@
 			proxyType = 1;
 			remoteGlobalIDString = 5958C1811E089EE30086B1FE;
 			remoteInfo = hitorwait;
+		};
+		5990D2791E8F039D00ABE381 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5990D2731E8F039C00ABE381 /* MAC.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 5990D2451E8F039C00ABE381;
+			remoteInfo = MAC;
+		};
+		5990D27B1E8F039D00ABE381 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5990D2731E8F039C00ABE381 /* MAC.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 5990D2561E8F039C00ABE381;
+			remoteInfo = MACTests;
+		};
+		5990D27D1E8F039D00ABE381 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5990D2731E8F039C00ABE381 /* MAC.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 5990D2611E8F039C00ABE381;
+			remoteInfo = MACUITests;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -86,7 +109,10 @@
 		5958C1A51E089EE30086B1FE /* hitorwaitUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = hitorwaitUITests.swift; sourceTree = "<group>"; };
 		5958C1A71E089EE30086B1FE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5958C1B41E08A9A20086B1FE /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		5990D2731E8F039C00ABE381 /* MAC.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MAC.xcodeproj; path = MAC/MAC.xcodeproj; sourceTree = "<group>"; };
+		5990D2811E8F08F300ABE381 /* yk_0.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = yk_0.gpx; path = MAC/MAC/yk_0.gpx; sourceTree = "<group>"; };
 		59ABF0C61E8C3CC20043C49C /* ContextManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContextManager.swift; sourceTree = "<group>"; };
+		59ABF0CA1E8D720C0043C49C /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		59CF630A1E47DA3F00108F3B /* LogInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
 		59CF630C1E47E0B000108F3B /* LostItemViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LostItemViewController.swift; sourceTree = "<group>"; };
 		59CF630E1E4A757700108F3B /* LostItemRegion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LostItemRegion.swift; sourceTree = "<group>"; };
@@ -133,6 +159,8 @@
 		5958C1791E089EE30086B1FE = {
 			isa = PBXGroup;
 			children = (
+				5990D2811E8F08F300ABE381 /* yk_0.gpx */,
+				5990D2731E8F039C00ABE381 /* MAC.xcodeproj */,
 				5958C1841E089EE30086B1FE /* hitorwait */,
 				5958C1991E089EE30086B1FE /* hitorwaitTests */,
 				5958C1A41E089EE30086B1FE /* hitorwaitUITests */,
@@ -188,6 +216,7 @@
 		5958C1B31E089EF90086B1FE /* Supporting files */ = {
 			isa = PBXGroup;
 			children = (
+				59ABF0CA1E8D720C0043C49C /* Icon.png */,
 				595176441E83115800C5B7B8 /* hitorwait.entitlements */,
 				59ABF0C81E8C49EB0043C49C /* Images */,
 				5958C18C1E089EE30086B1FE /* Assets.xcassets */,
@@ -197,6 +226,16 @@
 				59063C381E15B93C00659527 /* hitorwait-Bridging-Header.h */,
 			);
 			name = "Supporting files";
+			sourceTree = "<group>";
+		};
+		5990D2741E8F039C00ABE381 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				5990D27A1E8F039D00ABE381 /* MAC.app */,
+				5990D27C1E8F039D00ABE381 /* MACTests.xctest */,
+				5990D27E1E8F039D00ABE381 /* MACUITests.xctest */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		59ABF0C81E8C49EB0043C49C /* Images */ = {
@@ -348,6 +387,12 @@
 			mainGroup = 5958C1791E089EE30086B1FE;
 			productRefGroup = 5958C1831E089EE30086B1FE /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 5990D2741E8F039C00ABE381 /* Products */;
+					ProjectRef = 5990D2731E8F039C00ABE381 /* MAC.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				5958C1811E089EE30086B1FE /* hitorwait */,
@@ -356,6 +401,30 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		5990D27A1E8F039D00ABE381 /* MAC.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = MAC.app;
+			remoteRef = 5990D2791E8F039D00ABE381 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		5990D27C1E8F039D00ABE381 /* MACTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = MACTests.xctest;
+			remoteRef = 5990D27B1E8F039D00ABE381 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		5990D27E1E8F039D00ABE381 /* MACUITests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = MACUITests.xctest;
+			remoteRef = 5990D27D1E8F039D00ABE381 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		5958C1801E089EE30086B1FE /* Resources */ = {
@@ -369,10 +438,12 @@
 				5958C1901E089EE30086B1FE /* LaunchScreen.storyboard in Resources */,
 				590C48BB1E8B1386004D43AE /* admin.png in Resources */,
 				59063C501E15DAC900659527 /* tolab.gpx in Resources */,
+				59ABF0CB1E8D720C0043C49C /* Icon.png in Resources */,
 				59063C4E1E15DAC900659527 /* route2.gpx in Resources */,
 				5958C18D1E089EE30086B1FE /* Assets.xcassets in Resources */,
 				59063C511E15DAC900659527 /* route5.gpx in Resources */,
 				59063C4F1E15DAC900659527 /* route3.gpx in Resources */,
+				5990D2821E8F08F300ABE381 /* yk_0.gpx in Resources */,
 				5958C18B1E089EE30086B1FE /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -585,15 +656,16 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = hitorwait/hitorwait.entitlements;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				DEVELOPMENT_TEAM = 823S57WQK3;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Northwestern University";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = W4E2C6X642;
 				INFOPLIST_FILE = hitorwait/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = edu.northwestern.delta.otgDev;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "ccd55835-c338-4e10-942f-8cab0cca532d";
-				PROVISIONING_PROFILE_SPECIFIER = "Delta Lab O";
+				PROVISIONING_PROFILE = "6831b970-fa5d-4d40-804c-18cd3b94adc8";
+				PROVISIONING_PROFILE_SPECIFIER = "OTG Dev";
 				SWIFT_OBJC_BRIDGING_HEADER = "hitorwait/hitorwait-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};

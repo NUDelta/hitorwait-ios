@@ -15,9 +15,8 @@ class tabBarViewController: UITabBarController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        let defaults = UserDefaults.standard
-        CURRENT_USER = User(username: defaults.value(forKey: "username") as! String, tokenId: defaults.value(forKey: "tokenId") as! String)
         // Do any additional setup after loading the view.
+        Pretracker.sharedManager.locationManager?.startUpdatingLocation()
     }
 
     override func didReceiveMemoryWarning() {

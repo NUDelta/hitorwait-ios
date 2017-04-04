@@ -11,10 +11,12 @@ import UIKit
 class SettingsViewController: UIViewController {
 
     @IBOutlet weak var movementModelControl: UISegmentedControl!
+    @IBOutlet weak var headingSwitch: UISwitch!
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        headingSwitch.setOn(false, animated: false)
     }
 
     override func didReceiveMemoryWarning() {

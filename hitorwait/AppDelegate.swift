@@ -85,56 +85,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
 //            sendCurrentLocation(lat: Float(lat),lon: Float(lon))
 //        }
 //    }
+    
+    func VCforPush() {
+        let nc = NotificationCenter.default
+//        let userInfo = ["lat": self.currentLocation?.coordinate.latitude,"lng": self.currentLocation?.coordinate.longitude,"road": json["road"]!] as [String : Any]
+        nc.post(name: NSNotification.Name(rawValue: "PushReceived"), object: nil, userInfo: nil)
+    }
 
     // we only have 30 seconds here.
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
 
-        if (userInfo.index(forKey: "decisions") != nil) {
-            print("hit or wait decision is here")
-            print(userInfo["decisions"])
-            
-            // TODO: how to deal with hit-or-wait decisions?
-            let decisionTable:[[String: String]] = userInfo["decisions"] as! [[String:String]]
-            let coordinateTable:[String: Any] = userInfo["coordinates"] as! [String: Any]
-            let models = userInfo["models"] as! [String: Any]
-            
-            
-            if let decision = decisionTable.last {
-                for road in decision.keys {
-                    print(road)
-                    if decision[road] == "Hit" {
-                        print("\(decision[road]) on the road \(road))")
-                        if let idx = coordinateTable.index(forKey: road){
-                            let coord = coordinateTable[idx]
-                            let latlng = coord.value as! [Double]
-                            //                        self.hitRoads[road] = latlng
-                            //                        print(latlng)
-                            //                        print(self.hitRoads)
-                            //                        if !self.hasDecisions! {
-                            //                            self.hasDecisions = true
-                            //                        }
-                            //                        self.allRoads[road] = latlng
-                        } else {
-                            print("not in the coordinate table")
-                        }
-                    } else {
-                        if let idx = coordinateTable.index(forKey: road) {
-                            let coord = coordinateTable[idx]
-                            let latlng = coord.value as! [Double]
-                            print(latlng)
-                        } else {
-                            print("not in the coordinate table")
-                        }
-//                        self.allRoads[road] = latlng
-                    }
-                }
-                let nc = NotificationCenter.default
-                let allRoads = [HitRoad]()
-//                let models = [String:Any]()
-                
-                //TODO: should add models and values for admin view.
-                let userInfo = ["coordinates": coordinateTable, "decisions":decisionTable, "models": models] as [String : Any]
-                nc.post(name: NSNotification.Name(rawValue: "HitRoads"), object: nil, userInfo: userInfo)
+        if (userInfo.index(forKey: "search_road") != nil) {
+            if let region_id = userInfo["search_region_id"] {
+//                print(region_id)
+                defaults.set(region_id, forKey: "regionId")
+                VCforPush()
             }
         }
         
@@ -152,53 +117,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                 // need to add this for handling background fetch.
                 completionHandler(UIBackgroundFetchResult.noData)
             })
-//            let lat = currentLocation.coordinate.latitude
-//            let lon = currentLocation.coordinate.longitude
-//            let config = URLSessionConfiguration.default
-//            let session: URLSession = URLSession(configuration: config)
-//            
-//            let date = Date().timeIntervalSince1970
-//            
-//            let user = defaults.value(forKey: "username")!
-//            let url : String = "\(Config.URL)/currentlocation?lat=\(lat)&lon=\(lon)&date=\(Int(date))&user=\(user)"
-//            
-//            let urlStr : String = url.addingPercentEncoding(withAllowedCharacters:NSCharacterSet.urlQueryAllowed)!
-//            let searchURL : URL = URL(string: urlStr as String)!
-//            do {
-//                let task = session.dataTask(with: searchURL, completionHandler: {
-//                    (data, response, error) in
-//                    if error != nil {
-//                        print(error?.localizedDescription)
-//                    }
-//                    if data != nil {
-//                        do {
-//                            if let json = try JSONSerialization.jsonObject(with: data!, options: .allowFragments) as? [String: Any] {
-//                                print(json)
-//                                completionHandler(UIBackgroundFetchResult.noData)
-//                            }
-//                        } catch let error as NSError {
-//                            print(error)
-//                        }
-//                    }
-//                })
-//                task.resume()
-//                
-//            } catch let error as NSError{
-//                print(error)
-//            }
         }
-        
-        //call CommManager POST method
-//        if let currentLocation = Pretracker.sharedManager.currentLocation {
-        //        let date = Date().timeIntervalSince1970
-//            let lat = currentLocation.coordinate.latitude
-//            let lon = currentLocation.coordinate.longitude
-//            let params = ["user": (CURRENT_USER?.username)!, "lat": lat, "lon": lon, "date":date] as [String : Any]
-//            CommManager.instance.urlRequest(route: "currentlocation", parameters: params, completion: {
-//                json in
-//                print(json)
-//            })
-//        }
     }
     
     func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
@@ -206,35 +125,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         print("APNs registration failed: \(error)")
     }
     
-//    func sendUserToken(_ tokenId: String) {
-//        let config = URLSessionConfiguration.default
-//        let session: URLSession = URLSession(configuration: config)
-//
-//        let url : String = "\(Config.URL)/user?tokenId=\(tokenId)"
-//        let urlStr : String = url.addingPercentEncoding(withAllowedCharacters:NSCharacterSet.urlQueryAllowed)!
-//        let searchURL : URL = URL(string: urlStr as String)!
-//        do {
-//            let task = session.dataTask(with: searchURL, completionHandler: {
-//                (data, response, error) in
-//                if error != nil {
-//                    print(error?.localizedDescription)
-//                }
-//                if data != nil {
-//                    do {
-//                        if let json = try JSONSerialization.jsonObject(with: data!, options: .allowFragments) as? [String: Any] {
-//                            print(json)
-//                        }
-//                    } catch let error as NSError {
-//                        print(error)
-//                    }
-//                }
-//            })
-//            task.resume()
-//            
-//        } catch let error as NSError{
-//            print(error)
-//        }
-//    }
     
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.

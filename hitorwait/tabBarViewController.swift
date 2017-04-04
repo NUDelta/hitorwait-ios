@@ -17,8 +17,17 @@ class tabBarViewController: UITabBarController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         Pretracker.sharedManager.locationManager?.startUpdatingLocation()
+        
+        let nc = NotificationCenter.default
+        
+         Notification.Name(rawValue:"LocationUpdate")
+        nc.addObserver(forName: Notification.Name(rawValue:"PushReceived"), object: nil, queue: OperationQueue.main, using: setVC)
     }
-
+    
+    func setVC(notification: Notification) -> Void {
+        self.selectedIndex = 1
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

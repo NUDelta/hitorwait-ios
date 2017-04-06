@@ -10,8 +10,11 @@ import UIKit
 
 class LogInViewController: UIViewController {
     @IBOutlet weak var userNameTextField: UITextField!
+    var uuid = UUID().uuidString
     override func viewDidLoad() {
         super.viewDidLoad()
+        uuid = uuid.replacingOccurrences(of: "-", with: "")
+//        userNameTextField.text = uuid
 //        var itemRegion = LostItemRegion()
 //        //42.047409, -87.679081
 //        itemRegion.getLostItemRegion(42.077902,87.691171) { completed in
@@ -78,10 +81,10 @@ class LogInViewController: UIViewController {
 //                     }
                     if let username = userNameTextField.text {
                         let defaults = UserDefaults.standard
-                        defaults.set(username,forKey: "username")
-                        print(username)
+                        defaults.set(uuid,forKey: "username")
+                        print(uuid)
                         let tokenId:String = defaults.value(forKey: "tokenId") as! String
-                        postUserInfo(username, tokenId)
+                        postUserInfo(uuid, tokenId)
                     }
             
                 default: break

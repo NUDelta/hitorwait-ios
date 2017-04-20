@@ -7,18 +7,18 @@
 		<key>ApplicationPath</key>
 		<string>Applications/hitorwait.app</string>
 		<key>CFBundleIdentifier</key>
-		<string>edu.northwestern.delta.O</string>
+		<string>edu.northwestern.delta.otgDev</string>
 		<key>CFBundleShortVersionString</key>
 		<string>1.0</string>
 		<key>CFBundleVersion</key>
 		<string>1</string>
 		<key>SigningIdentity</key>
-		<string>iPhone Distribution: Northwestern University</string>
+		<string>iPhone Developer: Yongsung Kim (ALQWK44CCB)</string>
 	</dict>
 	<key>ArchiveVersion</key>
 	<integer>2</integer>
 	<key>CreationDate</key>
-	<date>2017-04-07T20:01:13Z</date>
+	<date>2017-04-20T20:52:35Z</date>
 	<key>Name</key>
 	<string>hitorwait</string>
 	<key>SchemeName</key>

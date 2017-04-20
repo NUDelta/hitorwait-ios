@@ -125,7 +125,7 @@ class Pretracker: NSObject, CLLocationManagerDelegate, UNUserNotificationCenterD
     //MARK: HiorWait APIs
     // input: current location, return road name
     func getRoad(_ location: CLLocation, completion: @escaping ([String:Any])->()) {
-        let json = ["user":username,"lat": Double(location.coordinate.latitude), "lon": Double(location.coordinate.longitude)] as! [String : Any]
+        let json = ["user":username,"lat": Double(location.coordinate.latitude), "lon": Double(location.coordinate.longitude), "accuracy":Double(location.horizontalAccuracy), "date": Date().timeIntervalSince1970] as! [String : Any]
         CommManager.instance.urlRequest(route: "currentroad", parameters: json) {
             json in
             completion(json)

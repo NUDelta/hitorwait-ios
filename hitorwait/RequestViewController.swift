@@ -59,27 +59,50 @@ class RequestViewController: UIViewController, MKMapViewDelegate, UITextFieldDel
     }
    
     @IBAction func requestButtonClick(_ sender: UIButton) {
-        let alert = UIAlertController(title: "Thank you!", message: "We will help you find the item soon!", preferredStyle: UIAlertControllerStyle.alert)
-        let okAction = UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default) {
-            act in
-            print("ok")
-        }
-        
-        itemTextField.text = ""
-        itemDetailTextField.text = ""
-        self.mapView.removeAnnotations(self.mapView.annotations)
-        
-        alert.addAction(okAction)
-        self.present(alert, animated: true, completion: nil)
         
         let params = ["user":(CURRENT_USER?.username)!, "item": (itemTextField.text)! ?? "", "detail": (itemDetailTextField.text)! ?? "", "lat":(lostItemCoordinate?.latitude)! ?? 0.0, "lon":(lostItemCoordinate?.longitude)! ?? 0.0] as [String : Any]
         
         CommManager.instance.urlRequest(route: "regions", parameters: params){
             json in
-            print(json)
+            if let result = json["result"] as? String {
+                if result == "not requester" {
+                    self.showNotRequesterAlert()
+                } else if result == "success" {
+                    self.showSuccessAlert()
+                }
+            }
         }
         print("requested")
     }
+    
+    func showNotRequesterAlert() {
+        DispatchQueue.main.async {
+            let alert = UIAlertController(title: "Sorry", message: "Only authorized requesters can request.", preferredStyle: UIAlertControllerStyle.alert)
+            let okAction = UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default)
+            
+            alert.addAction(okAction)
+            self.present(alert, animated: true, completion: nil)
+            
+            self.itemTextField.text = ""
+            self.itemDetailTextField.text = ""
+            self.mapView.removeAnnotations(self.mapView.annotations)
+        }
+    }
+
+    func showSuccessAlert() {
+        DispatchQueue.main.async {
+            let alert = UIAlertController(title: "Thanks!", message: "We will help you find the item soon.", preferredStyle: UIAlertControllerStyle.alert)
+            let okAction = UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default)
+            
+            alert.addAction(okAction)
+            self.present(alert, animated: true, completion: nil)
+            
+            self.itemTextField.text = ""
+            self.itemDetailTextField.text = ""
+            self.mapView.removeAnnotations(self.mapView.annotations)
+        }
+    }
+    
      /*
         let config = URLSessionConfiguration.default
         let session: URLSession = URLSession(configuration: config)

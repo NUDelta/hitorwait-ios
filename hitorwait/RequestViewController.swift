@@ -59,6 +59,19 @@ class RequestViewController: UIViewController, MKMapViewDelegate, UITextFieldDel
     }
    
     @IBAction func requestButtonClick(_ sender: UIButton) {
+        let alert = UIAlertController(title: "Thank you!", message: "We will help you find the item soon!", preferredStyle: UIAlertControllerStyle.alert)
+        let okAction = UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default) {
+            act in
+            print("ok")
+        }
+        
+        itemTextField.text = ""
+        itemDetailTextField.text = ""
+        self.mapView.removeAnnotations(self.mapView.annotations)
+        
+        alert.addAction(okAction)
+        self.present(alert, animated: true, completion: nil)
+        
         let params = ["user":(CURRENT_USER?.username)!, "item": (itemTextField.text)! ?? "", "detail": (itemDetailTextField.text)! ?? "", "lat":(lostItemCoordinate?.latitude)! ?? 0.0, "lon":(lostItemCoordinate?.longitude)! ?? 0.0] as [String : Any]
         
         CommManager.instance.urlRequest(route: "regions", parameters: params){

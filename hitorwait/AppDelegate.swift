@@ -95,10 +95,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     // we only have 30 seconds here.
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
 
+        //TODO: need to send decision_activity_id
         if (userInfo.index(forKey: "search_road") != nil) {
             if let region_id = userInfo["search_region_id"] {
 //                print(region_id)
                 defaults.set(region_id, forKey: "regionId")
+                let decision_activity_id = userInfo["decision_activity_id"]
+                defaults.set(decision_activity_id, forKey:"decision_activity_id")
+                let search_road = userInfo["search_road"]
+                defaults.set(search_road, forKey: "search_road")
+
                 VCforPush()
             }
         }
@@ -109,8 +115,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             let lat = currentLocation.coordinate.latitude
             let lon = currentLocation.coordinate.longitude
             let date = Date().timeIntervalSince1970
-
-            let params = ["user": (CURRENT_USER?.username)! ?? "", "lat": lat, "lon": lon, "date":date] as [String : Any]
+            let accuracy = currentLocation.horizontalAccuracy
+            let params = ["user": (CURRENT_USER?.username)! ?? "", "lat": lat, "lon": lon, "date":date, "accuracy":accuracy] as [String : Any]
             CommManager.instance.urlRequest(route: "currentlocation", parameters: params, completion: {
                 json in
                 print(json)

@@ -13,7 +13,7 @@
 		59063C4E1E15DAC900659527 /* route2.gpx in Resources */ = {isa = PBXBuildFile; fileRef = 59063C491E15DAC900659527 /* route2.gpx */; };
 		59063C4F1E15DAC900659527 /* route3.gpx in Resources */ = {isa = PBXBuildFile; fileRef = 59063C4A1E15DAC900659527 /* route3.gpx */; };
 		59063C501E15DAC900659527 /* tolab.gpx in Resources */ = {isa = PBXBuildFile; fileRef = 59063C4B1E15DAC900659527 /* tolab.gpx */; };
-		59063C511E15DAC900659527 /* route5.gpx in Resources */ = {isa = PBXBuildFile; fileRef = 59063C4C1E15DAC900659527 /* route5.gpx */; };
+		59063C511E15DAC900659527 /* from home to lab.gpx in Resources */ = {isa = PBXBuildFile; fileRef = 59063C4C1E15DAC900659527 /* from home to lab.gpx */; };
 		590C48B51E8B1079004D43AE /* search.png in Resources */ = {isa = PBXBuildFile; fileRef = 590C48B41E8B1079004D43AE /* search.png */; };
 		590C48B71E8B118C004D43AE /* lost.png in Resources */ = {isa = PBXBuildFile; fileRef = 590C48B61E8B118C004D43AE /* lost.png */; };
 		590C48B91E8B11DC004D43AE /* settings.png in Resources */ = {isa = PBXBuildFile; fileRef = 590C48B81E8B11DC004D43AE /* settings.png */; };
@@ -28,6 +28,7 @@
 		5958C19B1E089EE30086B1FE /* hitorwaitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5958C19A1E089EE30086B1FE /* hitorwaitTests.swift */; };
 		5958C1A61E089EE30086B1FE /* hitorwaitUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5958C1A51E089EE30086B1FE /* hitorwaitUITests.swift */; };
 		5958C1B51E08A9A20086B1FE /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5958C1B41E08A9A20086B1FE /* User.swift */; };
+		59A907E11EA91DD5006BE33A /* from home to lab.gpx in Resources */ = {isa = PBXBuildFile; fileRef = 59A907E01EA91DD5006BE33A /* from home to lab.gpx */; };
 		59ABF0C71E8C3CC20043C49C /* ContextManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59ABF0C61E8C3CC20043C49C /* ContextManager.swift */; };
 		59ABF0CB1E8D720C0043C49C /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 59ABF0CA1E8D720C0043C49C /* Icon.png */; };
 		59CF630B1E47DA3F00108F3B /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59CF630A1E47DA3F00108F3B /* LogInViewController.swift */; };
@@ -65,7 +66,7 @@
 		59063C491E15DAC900659527 /* route2.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = route2.gpx; sourceTree = "<group>"; };
 		59063C4A1E15DAC900659527 /* route3.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = route3.gpx; sourceTree = "<group>"; };
 		59063C4B1E15DAC900659527 /* tolab.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = tolab.gpx; sourceTree = "<group>"; };
-		59063C4C1E15DAC900659527 /* route5.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = route5.gpx; sourceTree = "<group>"; };
+		59063C4C1E15DAC900659527 /* from home to lab.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "from home to lab.gpx"; sourceTree = "<group>"; };
 		590C48B41E8B1079004D43AE /* search.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = search.png; sourceTree = "<group>"; };
 		590C48B61E8B118C004D43AE /* lost.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lost.png; sourceTree = "<group>"; };
 		590C48B81E8B11DC004D43AE /* settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settings.png; sourceTree = "<group>"; };
@@ -87,6 +88,7 @@
 		5958C1A51E089EE30086B1FE /* hitorwaitUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = hitorwaitUITests.swift; sourceTree = "<group>"; };
 		5958C1A71E089EE30086B1FE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5958C1B41E08A9A20086B1FE /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		59A907E01EA91DD5006BE33A /* from home to lab.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "from home to lab.gpx"; sourceTree = "<group>"; };
 		59ABF0C61E8C3CC20043C49C /* ContextManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContextManager.swift; sourceTree = "<group>"; };
 		59ABF0CA1E8D720C0043C49C /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		59CF630A1E47DA3F00108F3B /* LogInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
@@ -216,11 +218,12 @@
 		59ABF0C91E8C49F30043C49C /* Simulation Routes */ = {
 			isa = PBXGroup;
 			children = (
+				59A907E01EA91DD5006BE33A /* from home to lab.gpx */,
 				59063C481E15DAC900659527 /* route1.gpx */,
 				59063C491E15DAC900659527 /* route2.gpx */,
 				59063C4A1E15DAC900659527 /* route3.gpx */,
 				59063C4B1E15DAC900659527 /* tolab.gpx */,
-				59063C4C1E15DAC900659527 /* route5.gpx */,
+				59063C4C1E15DAC900659527 /* from home to lab.gpx */,
 			);
 			name = "Simulation Routes";
 			sourceTree = "<group>";
@@ -316,7 +319,7 @@
 				TargetAttributes = {
 					5958C1811E089EE30086B1FE = {
 						CreatedOnToolsVersion = 8.1;
-						DevelopmentTeam = 823S57WQK3;
+						DevelopmentTeam = W4E2C6X642;
 						LastSwiftMigration = 0820;
 						ProvisioningStyle = Manual;
 						SystemCapabilities = {
@@ -375,8 +378,9 @@
 				59ABF0CB1E8D720C0043C49C /* Icon.png in Resources */,
 				59063C4E1E15DAC900659527 /* route2.gpx in Resources */,
 				5958C18D1E089EE30086B1FE /* Assets.xcassets in Resources */,
-				59063C511E15DAC900659527 /* route5.gpx in Resources */,
+				59063C511E15DAC900659527 /* from home to lab.gpx in Resources */,
 				59063C4F1E15DAC900659527 /* route3.gpx in Resources */,
+				59A907E11EA91DD5006BE33A /* from home to lab.gpx in Resources */,
 				5958C18B1E089EE30086B1FE /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -568,15 +572,15 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = hitorwait/hitorwait.entitlements;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				DEVELOPMENT_TEAM = 823S57WQK3;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = W4E2C6X642;
 				INFOPLIST_FILE = hitorwait/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = edu.northwestern.delta.O;
+				PRODUCT_BUNDLE_IDENTIFIER = edu.northwestern.delta.otgDev;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "ccd55835-c338-4e10-942f-8cab0cca532d";
-				PROVISIONING_PROFILE_SPECIFIER = "Delta Lab O";
+				PROVISIONING_PROFILE = "6831b970-fa5d-4d40-804c-18cd3b94adc8";
+				PROVISIONING_PROFILE_SPECIFIER = "OTG Dev";
 				SWIFT_OBJC_BRIDGING_HEADER = "hitorwait/hitorwait-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
@@ -590,15 +594,15 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = hitorwait/hitorwait.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Northwestern University";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				DEVELOPMENT_TEAM = 823S57WQK3;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = W4E2C6X642;
 				INFOPLIST_FILE = hitorwait/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = edu.northwestern.delta.O;
+				PRODUCT_BUNDLE_IDENTIFIER = edu.northwestern.delta.otgDev;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "ccd55835-c338-4e10-942f-8cab0cca532d";
-				PROVISIONING_PROFILE_SPECIFIER = "Delta Lab O";
+				PROVISIONING_PROFILE = "6831b970-fa5d-4d40-804c-18cd3b94adc8";
+				PROVISIONING_PROFILE_SPECIFIER = "OTG Dev";
 				SWIFT_OBJC_BRIDGING_HEADER = "hitorwait/hitorwait-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};

@@ -37,7 +37,6 @@ class LostItemViewController: UIViewController {
 //        getItemDetails()
         
         //TODO: add an observer for search region changes from Pretracker.
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -75,7 +74,18 @@ class LostItemViewController: UIViewController {
     }
     
     func itemFound() {
-        let param = ["user":(CURRENT_USER?.username)!,"lat":String(describing: (Pretracker.sharedManager.currentLocation?.coordinate.latitude)!) ?? 0.0,"lon":String(describing: (Pretracker.sharedManager.currentLocation?.coordinate.longitude)!) ?? 0.0,"uid":searchRegion?.id ?? "","found":true] as [String : Any]
+        let alert = UIAlertController(title: "Thank you!", message: "Thank you for finding the item!", preferredStyle: UIAlertControllerStyle.alert)
+        let okAction = UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default) {
+            act in
+            print("ok")
+        }
+        
+        alert.addAction(okAction)
+        self.present(alert, animated: true, completion: nil)
+        
+        let defaults = UserDefaults.standard
+
+        let param = ["user":(CURRENT_USER?.username)!,"lat":String(describing: (Pretracker.sharedManager.currentLocation?.coordinate.latitude)!) ?? 0.0,"lon":String(describing: (Pretracker.sharedManager.currentLocation?.coordinate.longitude)!) ?? 0.0,"uid":searchRegion?.id ?? "","decision_activity_id": defaults.value(forKey: "decision_activity_id") ?? "", "search_road": defaults.value(forKey: "search_road") ?? "", "found":true] as [String : Any]
         CommManager.instance.urlRequest(route: "updateSearch", parameters: param, completion: {
             json in
             print("thanks")
@@ -83,7 +93,18 @@ class LostItemViewController: UIViewController {
     }
     
     func itemNotFound() {
-        let param = ["user":(CURRENT_USER?.username)!,"lat":String(describing: (Pretracker.sharedManager.currentLocation?.coordinate.latitude)!) ?? 0.0,"lon":String(describing: (Pretracker.sharedManager.currentLocation?.coordinate.longitude)!) ?? 0.0,"uid":searchRegion?.id ?? "","found":false] as [String : Any]
+        let alert = UIAlertController(title: "Thank you!", message: "Thank you for looking for the item!", preferredStyle: UIAlertControllerStyle.alert)
+        let okAction = UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default) {
+            act in
+            print("ok")
+        }
+        alert.addAction(okAction)
+
+        self.present(alert, animated: true, completion: nil)
+
+        let defaults = UserDefaults.standard
+        
+        let param = ["user":(CURRENT_USER?.username)!,"lat":String(describing: (Pretracker.sharedManager.currentLocation?.coordinate.latitude)!) ?? 0.0,"lon":String(describing: (Pretracker.sharedManager.currentLocation?.coordinate.longitude)!) ?? 0.0,"uid":searchRegion?.id ?? "", "decision_activity_id": defaults.value(forKey: "decision_activity_id") ?? "", "search_road": defaults.value(forKey: "search_road") ?? "", "found":false] as [String : Any]
         CommManager.instance.urlRequest(route: "updateSearch", parameters: param, completion: {
             json in
             print("thanks anyway")

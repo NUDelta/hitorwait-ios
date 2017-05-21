@@ -44,8 +44,9 @@ class Pretracker: NSObject, CLLocationManagerDelegate, UNUserNotificationCenterD
     
     // search region's lat and lon for debugging. Use LostItemRegion instead.
     // comment this out
-    let regionLat = 42.047735
-    let regionLng = -87.678919
+
+    let regionLat = 42.058377
+    let regionLng = -87.679203
     var regionLocation:CLLocation?
 
     var didEnterRegion:Bool?
@@ -89,17 +90,33 @@ class Pretracker: NSObject, CLLocationManagerDelegate, UNUserNotificationCenterD
         
         // TODO: need to change the logic for finding lost item region.
         // call getNearbySearchRegions
-//        let center = CLLocationCoordinate2D(latitude: regionLat, longitude: regionLng)
-//        let region = CLCircularRegion(center: center, radius: 100, identifier: "region")
-//        regionLocation = CLLocation(latitude: regionLat, longitude: regionLng)
-//        locationManager.startMonitoring(for: region)
+        let center = CLLocationCoordinate2D(latitude: regionLat, longitude: regionLng)
+        let region = CLCircularRegion(center: center, radius: 200, identifier: "region")
+        regionLocation = CLLocation(latitude: regionLat, longitude: regionLng)
+        locationManager.startMonitoring(for: region)
 
         didEnterRegion = false
         hasDecisions = false
         
         UNUserNotificationCenter.current().delegate = self
+        
+        let nc = NotificationCenter.default
+        nc.addObserver(forName: NSNotification.Name(rawValue: "isPretrack"), object: nil, queue: OperationQueue.main, using: pretrackUpdate)
     }
     
+    func pretrackUpdate(notification: Notification) -> Void {
+        if let isPretrack = notification.userInfo?["isPretrack"] as? Bool{
+            if isPretrack {
+                self.locationManager?.desiredAccuracy = kCLLocationAccuracyBest
+                self.locationManager?.distanceFilter = 15.0
+            } else {
+                self.locationManager?.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+                self.locationManager?.distanceFilter = 100.0
+            }
+            
+        }
+        
+    }
     
     //MARK: notification methods
     func showNotification(road: String, decision: String) {
@@ -125,7 +142,7 @@ class Pretracker: NSObject, CLLocationManagerDelegate, UNUserNotificationCenterD
     //MARK: HiorWait APIs
     // input: current location, return road name
     func getRoad(_ location: CLLocation, completion: @escaping ([String:Any])->()) {
-        let json = ["user":username,"lat": Double(location.coordinate.latitude), "lon": Double(location.coordinate.longitude), "accuracy":Double(location.horizontalAccuracy), "date": Date().timeIntervalSince1970] as! [String : Any]
+        let json = ["user":username,"lat": Double(location.coordinate.latitude), "lon": Double(location.coordinate.longitude)] as! [String : Any]
         CommManager.instance.urlRequest(route: "currentroad", parameters: json) {
             json in
             completion(json)
@@ -203,7 +220,7 @@ class Pretracker: NSObject, CLLocationManagerDelegate, UNUserNotificationCenterD
     
     func checkLocationAccuracy(_ location: CLLocation) -> Bool {
         let age = -location.timestamp.timeIntervalSinceNow
-        if (location.horizontalAccuracy < 0 || location.horizontalAccuracy > 65 || age > 60) {
+        if (location.horizontalAccuracy < 0 || location.horizontalAccuracy > 65 || age > 30) {
             return false
         }
         return true
@@ -384,6 +401,28 @@ class Pretracker: NSObject, CLLocationManagerDelegate, UNUserNotificationCenterD
         // TODO: send error messages to DBs
         
         print("Location manager failed with error: \(error)")
+    }
+    
+    public func locationManager(_ manager: CLLocationManager, didEnterRegion region: CLRegion) {
+        let date = Date().timeIntervalSince1970
+        let params = ["user": (CURRENT_USER?.username)! ?? "", "date":date, "status":"enter"] as [String : Any]
+        CommManager.instance.urlRequest(route: "pretrackRegion", parameters: params, completion: {
+            json in
+            print(json)
+            // need to add this for handling background fetch.
+        })
+        print("didEnter")
+    }
+    
+    public func locationManager(_ manager: CLLocationManager, didExitRegion region: CLRegion) {
+        let date = Date().timeIntervalSince1970
+        let params = ["user": (CURRENT_USER?.username)! ?? "", "date":date, "status":"exit"] as [String : Any]
+        CommManager.instance.urlRequest(route: "pretrackRegion", parameters: params, completion: {
+            json in
+            print(json)
+            // need to add this for handling background fetch.
+        })
+        print("didExit")
     }
     
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {

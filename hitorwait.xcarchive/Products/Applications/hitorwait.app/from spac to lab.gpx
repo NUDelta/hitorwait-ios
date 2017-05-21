@@ -1,0 +1,29 @@
+<gpx>
+    <name>route1</name>
+    <number>1</number>
+    <wpt lat="42.058396" lon="-87.679450">
+        <ele>0</ele>
+        <time>2016-12-29T00:01:00Z</time>
+        <name>pt0</name>
+    </wpt>
+    <wpt lat="42.058388" lon="-87.678758">
+        <ele>0</ele>
+        <time>2016-12-29T00:01:05Z</time>
+        <name>pt1</name>
+    </wpt>
+    <wpt lat="42.058380" lon="-87.677825">
+        <ele>0</ele>
+        <time>2016-12-29T00:01:10Z</time>
+        <name>pt2</name>
+    </wpt>
+    <wpt lat="42.058093" lon="-87.677149">
+        <ele>0</ele>
+        <time>2016-12-29T00:01:20Z</time>
+        <name>pt3</name>
+    </wpt>
+    <wpt lat="42.056958" lon="-87.677170">
+        <ele>0</ele>
+        <time>2016-12-29T00:01:30Z</time>
+        <name>pt3</name>
+    </wpt>
+</gpx>

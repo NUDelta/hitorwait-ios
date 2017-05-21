@@ -21,10 +21,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         // Override point for customization after application launch.
         _ = Config()
 
-        center.requestAuthorization(options: options) { (granted, error) in
-            let generalCategory = UNNotificationCategory(identifier: "general", actions: [], intentIdentifiers: [], options: .customDismissAction)
-            self.center.setNotificationCategories([generalCategory])
-        }
+//        center.requestAuthorization(options: options) { (granted, error) in
+//            let generalCategory = UNNotificationCategory(identifier: "general", actions: [], intentIdentifiers: [], options: .customDismissAction)
+//            self.center.setNotificationCategories([generalCategory])
+//        }
         
         if #available(iOS 10, *) {
             UNUserNotificationCenter.current().requestAuthorization(options:[.badge, .alert, .sound]){ (granted, error) in }
@@ -59,7 +59,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
 //            self.window?.makeKeyAndVisible()
 //            self.window?.rootViewController?.present(tabbarVC, animated: true, completion: nil)
         }
-        
+//        showNotificationForTermination()
         return true
     }
 
@@ -109,14 +109,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             }
         }
         
+        if (userInfo.index(forKey: "isPretrack") != nil) {
+            if let isPretrack = userInfo["isPretrack"] {
+                let nc = NotificationCenter.default
+                nc.post(name: NSNotification.Name(rawValue: "isPretrack"), object: nil, userInfo: ["isPretrack":isPretrack])
+            }
+        }
+        
         Pretracker.sharedManager.locationManager!.requestLocation()
         
         if let currentLocation = Pretracker.sharedManager.currentLocation {
             let lat = currentLocation.coordinate.latitude
             let lon = currentLocation.coordinate.longitude
+            let speed = currentLocation.speed
             let date = Date().timeIntervalSince1970
             let accuracy = currentLocation.horizontalAccuracy
-            let params = ["user": (CURRENT_USER?.username)! ?? "", "lat": lat, "lon": lon, "date":date, "accuracy":accuracy] as [String : Any]
+            let params = ["user": (CURRENT_USER?.username)! ?? "", "lat": lat, "lon": lon, "date":date, "accuracy":accuracy, "speed":speed] as [String : Any]
             CommManager.instance.urlRequest(route: "currentlocation", parameters: params, completion: {
                 json in
                 print(json)
@@ -153,6 +161,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
         showNotificationForTermination()
+//        calendarNotificationForTermination()
+        let params = ["view":"appTerminated","user":(CURRENT_USER?.username)! ?? "","time":Date().timeIntervalSince1970] as [String: Any]
+        CommManager.instance.urlRequest(route: "appActivity", parameters: params, completion: {
+            json in
+            print (json)
+            // if there is no nearby search region with the item not found yet, server returns {"result":0}
+        })
     }
     
     func showNotificationForTermination() {
@@ -160,8 +175,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         content.title = "Please reopen the app"
         content.body = "Your app is about to be terminated."
         
-        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1,
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 2,
                                                         repeats: false)
+        
+        let request = UNNotificationRequest(identifier: "local", content: content, trigger: trigger)
+        
+        center.add(request)
+    }
+    
+    func calendarNotificationForTermination() {
+        let content = UNMutableNotificationContent()
+        content.title = "Please reopen the app"
+        content.body = "Your app is about to be terminated."
+        
+        var dateComponent = DateComponents()
+        let date = Date()
+        let calendar = Calendar.current
+        let hour = calendar.component(.hour, from: date)
+        let minute = calendar.component(.minute, from: date)
+        dateComponent.hour = hour
+        dateComponent.minute = minute + 1
+        
+        let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponent, repeats: false)
         
         let request = UNNotificationRequest(identifier: "local", content: content, trigger: trigger)
         

@@ -1,7 +1,9 @@
 from pymongo import MongoClient
+from bson.objectid import ObjectId
 
-uri = "mongodb://yk:kim@ds011389.mlab.com:11389/otg"
-dbName = "otg"
+
+uri = "mongodb://localhost:27017"
+dbName = "otg_backup"
 
 client = MongoClient(uri)
 db = client[dbName]
@@ -24,7 +26,8 @@ def gpx():
     locations = db.locations
 
     # your query
-    query = {"user":"yk"}
+    query = {"_id":ObjectId("58e6592fb9a31449b92de7c4")}
+    # q_result = locations.find().sort("_id",-1).limit(2)
     q_result = db.locations.find(query)
     header = "<gpx>\n"
     header_end = "</gpx>"
@@ -36,6 +39,8 @@ def gpx():
         user = q["user"]
         out_str = ""
         file_name = "%s_%d.gpx" % (user,cnt)
+        file_name = "kapil_unnamed.gpx"
+
         out_str += header
         for coord in coords:
             lat = coord[0]
@@ -47,5 +52,5 @@ def gpx():
         with open(file_name,'w') as file:
             file.write(out_str)
             cnt += 1
-        break
+
 gpx()

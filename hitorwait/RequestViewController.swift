@@ -31,6 +31,14 @@ class RequestViewController: UIViewController, MKMapViewDelegate, UITextFieldDel
         // Do any additional setup after loading the view.
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        let params = ["view":"requestView","user":(CURRENT_USER?.username)! ?? "","time":Date().timeIntervalSince1970] as [String: Any]
+        CommManager.instance.urlRequest(route: "appActivity", parameters: params, completion: {
+            json in
+            print (json)
+            // if there is no nearby search region with the item not found yet, server returns {"result":0}
+        })
+    }
     
     // ways to make keyboard disappear.
     
@@ -56,6 +64,7 @@ class RequestViewController: UIViewController, MKMapViewDelegate, UITextFieldDel
         center.longitude = -87.676519
         let region = MKCoordinateRegionMakeWithDistance (center, 1000, 1000)
         self.mapView.setRegion(region, animated: false)
+        self.mapView.showsBuildings = true
     }
    
     @IBAction func requestButtonClick(_ sender: UIButton) {

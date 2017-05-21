@@ -20,12 +20,19 @@ class tabBarViewController: UITabBarController {
         
         let nc = NotificationCenter.default
         
-         Notification.Name(rawValue:"LocationUpdate")
         nc.addObserver(forName: Notification.Name(rawValue:"PushReceived"), object: nil, queue: OperationQueue.main, using: setVC)
+        
+        nc.addObserver(forName: Notification.Name(rawValue:"ESMSent"), object: nil, queue: OperationQueue.main, using: setVC)
     }
     
     func setVC(notification: Notification) -> Void {
-        self.selectedIndex = 1
+        if notification.name.rawValue=="ESMSent" {
+            self.selectedIndex = 2
+        }
+        
+        if notification.name.rawValue=="PushReceived" {
+            self.selectedIndex = 0
+        }
     }
     
     override func didReceiveMemoryWarning() {

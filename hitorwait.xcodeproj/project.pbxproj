@@ -18,7 +18,10 @@
 		590C48B71E8B118C004D43AE /* lost.png in Resources */ = {isa = PBXBuildFile; fileRef = 590C48B61E8B118C004D43AE /* lost.png */; };
 		590C48B91E8B11DC004D43AE /* settings.png in Resources */ = {isa = PBXBuildFile; fileRef = 590C48B81E8B11DC004D43AE /* settings.png */; };
 		590C48BB1E8B1386004D43AE /* admin.png in Resources */ = {isa = PBXBuildFile; fileRef = 590C48BA1E8B1386004D43AE /* admin.png */; };
+		5930BC381EB2727700351FA5 /* yk_0.gpx in Resources */ = {isa = PBXBuildFile; fileRef = 5930BC371EB2727700351FA5 /* yk_0.gpx */; };
 		593823E11E889B3100D8BF78 /* CommManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 593823E01E889B3100D8BF78 /* CommManager.swift */; };
+		594226CC1ED1770A003B67E4 /* ESMModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594226CB1ED1770A003B67E4 /* ESMModalViewController.swift */; };
+		594226CE1ED17D17003B67E4 /* profile.png in Resources */ = {isa = PBXBuildFile; fileRef = 594226CD1ED17D17003B67E4 /* profile.png */; };
 		594D05851E1F057600061E93 /* HitRoad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594D05841E1F057600061E93 /* HitRoad.swift */; };
 		5958C1861E089EE30086B1FE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5958C1851E089EE30086B1FE /* AppDelegate.swift */; };
 		5958C1881E089EE30086B1FE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5958C1871E089EE30086B1FE /* ViewController.swift */; };
@@ -30,6 +33,7 @@
 		5958C1B51E08A9A20086B1FE /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5958C1B41E08A9A20086B1FE /* User.swift */; };
 		59A907E11EA91DD5006BE33A /* from home to lab.gpx in Resources */ = {isa = PBXBuildFile; fileRef = 59A907E01EA91DD5006BE33A /* from home to lab.gpx */; };
 		59A907E31EA965E6006BE33A /* from spac to lab.gpx in Resources */ = {isa = PBXBuildFile; fileRef = 59A907E21EA965E6006BE33A /* from spac to lab.gpx */; };
+		59A907E71EAE6167006BE33A /* noyes.gpx in Resources */ = {isa = PBXBuildFile; fileRef = 59A907E61EAE6167006BE33A /* noyes.gpx */; };
 		59ABF0C71E8C3CC20043C49C /* ContextManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59ABF0C61E8C3CC20043C49C /* ContextManager.swift */; };
 		59ABF0CB1E8D720C0043C49C /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 59ABF0CA1E8D720C0043C49C /* Icon.png */; };
 		59CF630B1E47DA3F00108F3B /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59CF630A1E47DA3F00108F3B /* LogInViewController.swift */; };
@@ -72,7 +76,10 @@
 		590C48B61E8B118C004D43AE /* lost.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lost.png; sourceTree = "<group>"; };
 		590C48B81E8B11DC004D43AE /* settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settings.png; sourceTree = "<group>"; };
 		590C48BA1E8B1386004D43AE /* admin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = admin.png; sourceTree = "<group>"; };
+		5930BC371EB2727700351FA5 /* yk_0.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = yk_0.gpx; sourceTree = "<group>"; };
 		593823E01E889B3100D8BF78 /* CommManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommManager.swift; sourceTree = "<group>"; };
+		594226CB1ED1770A003B67E4 /* ESMModalViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ESMModalViewController.swift; sourceTree = "<group>"; };
+		594226CD1ED17D17003B67E4 /* profile.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = profile.png; sourceTree = "<group>"; };
 		594D05841E1F057600061E93 /* HitRoad.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HitRoad.swift; sourceTree = "<group>"; };
 		595176441E83115800C5B7B8 /* hitorwait.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = hitorwait.entitlements; sourceTree = "<group>"; };
 		5958C1821E089EE30086B1FE /* hitorwait.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = hitorwait.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -91,6 +98,7 @@
 		5958C1B41E08A9A20086B1FE /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		59A907E01EA91DD5006BE33A /* from home to lab.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "from home to lab.gpx"; sourceTree = "<group>"; };
 		59A907E21EA965E6006BE33A /* from spac to lab.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "from spac to lab.gpx"; sourceTree = "<group>"; };
+		59A907E61EAE6167006BE33A /* noyes.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = noyes.gpx; sourceTree = "<group>"; };
 		59ABF0C61E8C3CC20043C49C /* ContextManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContextManager.swift; sourceTree = "<group>"; };
 		59ABF0CA1E8D720C0043C49C /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		59CF630A1E47DA3F00108F3B /* LogInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
@@ -209,6 +217,7 @@
 		59ABF0C81E8C49EB0043C49C /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				594226CD1ED17D17003B67E4 /* profile.png */,
 				590C48BA1E8B1386004D43AE /* admin.png */,
 				590C48B61E8B118C004D43AE /* lost.png */,
 				590C48B81E8B11DC004D43AE /* settings.png */,
@@ -221,7 +230,9 @@
 			isa = PBXGroup;
 			children = (
 				59A907E01EA91DD5006BE33A /* from home to lab.gpx */,
+				59A907E61EAE6167006BE33A /* noyes.gpx */,
 				59063C481E15DAC900659527 /* route1.gpx */,
+				5930BC371EB2727700351FA5 /* yk_0.gpx */,
 				59063C491E15DAC900659527 /* route2.gpx */,
 				59063C4A1E15DAC900659527 /* route3.gpx */,
 				59063C4B1E15DAC900659527 /* tolab.gpx */,
@@ -246,6 +257,7 @@
 			children = (
 				5958C1871E089EE30086B1FE /* ViewController.swift */,
 				59CF630C1E47E0B000108F3B /* LostItemViewController.swift */,
+				594226CB1ED1770A003B67E4 /* ESMModalViewController.swift */,
 				59F2B9AA1E8AD256004F351E /* tabBarViewController.swift */,
 				59CF630A1E47DA3F00108F3B /* LogInViewController.swift */,
 				59CF63121E54C66500108F3B /* RequestViewController.swift */,
@@ -322,7 +334,7 @@
 				TargetAttributes = {
 					5958C1811E089EE30086B1FE = {
 						CreatedOnToolsVersion = 8.1;
-						DevelopmentTeam = 823S57WQK3;
+						DevelopmentTeam = W4E2C6X642;
 						LastSwiftMigration = 0820;
 						ProvisioningStyle = Manual;
 						SystemCapabilities = {
@@ -378,10 +390,13 @@
 				5958C1901E089EE30086B1FE /* LaunchScreen.storyboard in Resources */,
 				590C48BB1E8B1386004D43AE /* admin.png in Resources */,
 				59063C501E15DAC900659527 /* tolab.gpx in Resources */,
+				5930BC381EB2727700351FA5 /* yk_0.gpx in Resources */,
 				59A907E31EA965E6006BE33A /* from spac to lab.gpx in Resources */,
 				59ABF0CB1E8D720C0043C49C /* Icon.png in Resources */,
 				59063C4E1E15DAC900659527 /* route2.gpx in Resources */,
+				59A907E71EAE6167006BE33A /* noyes.gpx in Resources */,
 				5958C18D1E089EE30086B1FE /* Assets.xcassets in Resources */,
+				594226CE1ED17D17003B67E4 /* profile.png in Resources */,
 				59063C511E15DAC900659527 /* from home to lab.gpx in Resources */,
 				59063C4F1E15DAC900659527 /* route3.gpx in Resources */,
 				59A907E11EA91DD5006BE33A /* from home to lab.gpx in Resources */,
@@ -418,6 +433,7 @@
 				59CF630F1E4A757700108F3B /* LostItemRegion.swift in Sources */,
 				59F5ACD31E81ADDC0095F0B4 /* Config.swift in Sources */,
 				59CF630D1E47E0B000108F3B /* LostItemViewController.swift in Sources */,
+				594226CC1ED1770A003B67E4 /* ESMModalViewController.swift in Sources */,
 				59F2B9AD1E8AD713004F351E /* SettingsViewController.swift in Sources */,
 				59CF630B1E47DA3F00108F3B /* LogInViewController.swift in Sources */,
 				594D05851E1F057600061E93 /* HitRoad.swift in Sources */,
@@ -519,7 +535,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -562,7 +578,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
@@ -576,15 +592,15 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = hitorwait/hitorwait.entitlements;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				DEVELOPMENT_TEAM = 823S57WQK3;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = W4E2C6X642;
 				INFOPLIST_FILE = hitorwait/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = edu.northwestern.delta.O;
+				PRODUCT_BUNDLE_IDENTIFIER = edu.northwestern.delta.otgDev;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "ccd55835-c338-4e10-942f-8cab0cca532d";
-				PROVISIONING_PROFILE_SPECIFIER = "Delta Lab O";
+				PROVISIONING_PROFILE = "6831b970-fa5d-4d40-804c-18cd3b94adc8";
+				PROVISIONING_PROFILE_SPECIFIER = "OTG Dev";
 				SWIFT_OBJC_BRIDGING_HEADER = "hitorwait/hitorwait-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
@@ -598,15 +614,15 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = hitorwait/hitorwait.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Northwestern University";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				DEVELOPMENT_TEAM = 823S57WQK3;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = W4E2C6X642;
 				INFOPLIST_FILE = hitorwait/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = edu.northwestern.delta.O;
+				PRODUCT_BUNDLE_IDENTIFIER = edu.northwestern.delta.otgDev;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "ccd55835-c338-4e10-942f-8cab0cca532d";
-				PROVISIONING_PROFILE_SPECIFIER = "Delta Lab O";
+				PROVISIONING_PROFILE = "6831b970-fa5d-4d40-804c-18cd3b94adc8";
+				PROVISIONING_PROFILE_SPECIFIER = "OTG Dev";
 				SWIFT_OBJC_BRIDGING_HEADER = "hitorwait/hitorwait-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};

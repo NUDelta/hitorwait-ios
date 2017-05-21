@@ -41,6 +41,12 @@ class LostItemViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         getNearbySearchRegion()
+        let params = ["view":"lostItem","user":(CURRENT_USER?.username)! ?? "","time":Date().timeIntervalSince1970] as [String: Any]
+        CommManager.instance.urlRequest(route: "appActivity", parameters: params, completion: {
+            json in
+            print (json)
+            // if there is no nearby search region with the item not found yet, server returns {"result":0}
+        })
     }
     
     func getNearbySearchRegion() {
@@ -69,8 +75,8 @@ class LostItemViewController: UIViewController {
     @IBAction func FoundItemButtonClicked(_ sender: UIButton) {
         print((CURRENT_USER?.username)!)
         //TODO: add item found.
-        itemFound()
-        
+//        itemFound()
+        performSegue(withIdentifier:"ESM View", sender: self)
     }
     
     func itemFound() {
@@ -112,7 +118,9 @@ class LostItemViewController: UIViewController {
     }
     
     @IBAction func didNotFindItemButtonClicked(_ sender: UIButton) {
-        itemNotFound()
+//        itemNotFound()
+        performSegue(withIdentifier:"ESM View", sender: self)
+
         //TODO: update search counts.
     }
     

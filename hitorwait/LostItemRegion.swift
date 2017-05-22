@@ -9,7 +9,6 @@
 import UIKit
 
 class LostItemRegion: NSObject {
-    let region:String
     let item: String
     let itemDetail: String
     var nearybyRoads: [String:Any]?
@@ -18,9 +17,8 @@ class LostItemRegion: NSObject {
     let lon: Double
     let id: String
     
-    init(requesterName: String, region: String, item: String, itemDetail: String, lat: Double, lon: Double, id: String) {
+    init(requesterName: String, item: String, itemDetail: String, lat: Double, lon: Double, id: String) {
         self.requesterName = requesterName
-        self.region = region
         self.item = item
         self.itemDetail = itemDetail
         self.id = id

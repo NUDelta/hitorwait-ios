@@ -9,7 +9,7 @@
 import UIKit
 
 class LostItemViewController: UIViewController {
-    
+    var hasInfo:Bool = false
     var searchRegion: LostItemRegion?
 //    {
 //        didSet {
@@ -23,13 +23,14 @@ class LostItemViewController: UIViewController {
     @IBOutlet weak var itemTextField: UILabel!
     @IBOutlet weak var itemDetailTextField: UILabel!
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         let center = NotificationCenter.default
         Pretracker.sharedManager.locationManager?.requestLocation()
         
-        getNearbySearchRegion()
+//        getNearbySearchRegion()
         
 //        center.addObserver(forName: NSNotification.Name(rawValue: "textFieldUpdate"), object: nil, queue: OperationQueue.main, using: updateTextField)
 //        center.addObserver(forName: NSNotification.Name(rawValue: "SearchRegionUpdate"), object: nil, queue: OperationQueue.main, using: updateSearchRegion)
@@ -39,14 +40,14 @@ class LostItemViewController: UIViewController {
         //TODO: add an observer for search region changes from Pretracker.
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        getNearbySearchRegion()
-        let params = ["view":"lostItem","user":(CURRENT_USER?.username)! ?? "","time":Date().timeIntervalSince1970] as [String: Any]
+    override func viewDidAppear(_ animated: Bool) {
+        let params = ["view":"lostItemView","user":(CURRENT_USER?.username)! ?? "","time":Date().timeIntervalSince1970] as [String: Any]
         CommManager.instance.urlRequest(route: "appActivity", parameters: params, completion: {
             json in
             print (json)
             // if there is no nearby search region with the item not found yet, server returns {"result":0}
         })
+        getNearbySearchRegion()
     }
     
     func getNearbySearchRegion() {
@@ -63,7 +64,7 @@ class LostItemViewController: UIViewController {
                     let coord = loc["coordinates"] as! [Double]
                     let id = json["_id"] as! [String:Any]
                     if regionId == id["$oid"] as! String {
-                        self.searchRegion = LostItemRegion(requesterName: json["user"] as! String, region: json["region"] as! String, item: json["item"] as! String, itemDetail: json["detail"] as! String, lat: coord[1], lon: coord[0], id: regionId)
+                        self.searchRegion = LostItemRegion(requesterName: json["user"] as! String, item: json["item"] as! String, itemDetail: json["detail"] as! String, lat: coord[1], lon: coord[0], id: regionId)
                         nc.post(name: NSNotification.Name(rawValue: "updatedDetail"), object: nil, userInfo:nil)
                     }
                 }
@@ -76,18 +77,21 @@ class LostItemViewController: UIViewController {
         print((CURRENT_USER?.username)!)
         //TODO: add item found.
 //        itemFound()
-        performSegue(withIdentifier:"ESM View", sender: self)
+        if self.hasInfo {
+            itemFound()
+            performSegue(withIdentifier:"ESM View", sender: self)
+        }
     }
     
     func itemFound() {
-        let alert = UIAlertController(title: "Thank you!", message: "Thank you for finding the item!", preferredStyle: UIAlertControllerStyle.alert)
-        let okAction = UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default) {
-            act in
-            print("ok")
-        }
-        
-        alert.addAction(okAction)
-        self.present(alert, animated: true, completion: nil)
+//        let alert = UIAlertController(title: "Thank you!", message: "Thank you for finding the item!", preferredStyle: UIAlertControllerStyle.alert)
+//        let okAction = UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default) {
+//            act in
+//            print("ok")
+//        }
+//        
+//        alert.addAction(okAction)
+//        self.present(alert, animated: true, completion: nil)
         
         let defaults = UserDefaults.standard
 
@@ -118,13 +122,15 @@ class LostItemViewController: UIViewController {
     }
     
     @IBAction func didNotFindItemButtonClicked(_ sender: UIButton) {
-//        itemNotFound()
-        performSegue(withIdentifier:"ESM View", sender: self)
-
+        if self.hasInfo {
+            itemNotFound()
+            performSegue(withIdentifier:"ESM View", sender: self)
+        }
         //TODO: update search counts.
     }
     
     func updateFields(notification: Notification) -> Void {
+        self.hasInfo = true
         requesterNameTextField.text = searchRegion?.requesterName
         itemTextField.text = searchRegion?.item
         itemDetailTextField.text = searchRegion?.itemDetail

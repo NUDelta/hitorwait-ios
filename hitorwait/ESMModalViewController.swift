@@ -10,6 +10,7 @@ import UIKit
 
 class ESMModalViewController: UIViewController {
 
+    var rating = 1
     override func viewDidLoad() {
         super.viewDidLoad()
         greetingsLabel.text = "Hi \((CURRENT_USER?.username)!)"
@@ -24,16 +25,36 @@ class ESMModalViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        let params = ["view":"esmView","user":(CURRENT_USER?.username)! ?? "","time":Date().timeIntervalSince1970] as [String: Any]
+        CommManager.instance.urlRequest(route: "appActivity", parameters: params, completion: {
+            json in
+            print (json)
+            // if there is no nearby search region with the item not found yet, server returns {"result":0}
+        })
+    }
+    
     @IBAction func submitButtonClicked(_ sender: Any) {
+        submitRating()
         dismiss(animated: false) { 
             let nc = NotificationCenter.default
             nc.post(name: NSNotification.Name(rawValue: "ESMSent"), object: nil, userInfo: nil)
         }
     }
+    
+    func submitRating() {
+        let params = ["view":"esmView","user":(CURRENT_USER?.username)! ?? "","time":Date().timeIntervalSince1970, "rating":rating,"lat":String(describing: (Pretracker.sharedManager.currentLocation?.coordinate.latitude)!) ?? 0.0,"lon":String(describing: (Pretracker.sharedManager.currentLocation?.coordinate.longitude)!) ?? 0.0] as [String: Any]
+        
+        CommManager.instance.urlRequest(route: "esm", parameters: params, completion: {
+            json in
+            print("thanks")
+        })
+    }
 
     @IBAction func valueChange(_ sender: UISlider) {
         var interval = 1
         var answerValue = Int(sender.value / Float(interval) ) * interval
+        rating = answerValue
         sender.value = Float(answerValue) // remove this if you don't want discrete slider.
         switch sender.value {
         case 1:

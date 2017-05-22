@@ -69,18 +69,21 @@ class RequestViewController: UIViewController, MKMapViewDelegate, UITextFieldDel
    
     @IBAction func requestButtonClick(_ sender: UIButton) {
         
-        let params = ["user":(CURRENT_USER?.username)!, "item": (itemTextField.text)! ?? "", "detail": (itemDetailTextField.text)! ?? "", "lat":(lostItemCoordinate?.latitude)! ?? 0.0, "lon":(lostItemCoordinate?.longitude)! ?? 0.0] as [String : Any]
-        
-        CommManager.instance.urlRequest(route: "regions", parameters: params){
-            json in
-            if let result = json["result"] as? String {
-                if result == "not requester" {
-                    self.showNotRequesterAlert()
-                } else if result == "success" {
-                    self.showSuccessAlert()
+        if let lat = lostItemCoordinate?.latitude {
+            let params = ["user":(CURRENT_USER?.username)!, "item": (itemTextField.text)! ?? "", "detail": (itemDetailTextField.text)! ?? "", "lat":lat, "lon":(lostItemCoordinate?.longitude)! ?? 0.0] as [String : Any]
+            
+            CommManager.instance.urlRequest(route: "regions", parameters: params){
+                json in
+                if let result = json["result"] as? String {
+                    if result == "not requester" {
+                        self.showNotRequesterAlert()
+                    } else if result == "success" {
+                        self.showSuccessAlert()
+                    }
                 }
             }
         }
+
         print("requested")
     }
     

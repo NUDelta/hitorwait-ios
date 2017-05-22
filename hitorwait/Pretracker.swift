@@ -34,7 +34,7 @@ class Pretracker: NSObject, CLLocationManagerDelegate, UNUserNotificationCenterD
     var hasPosted = false
     
     // 40-50 meters = road segment change
-    let distanceUpdate = 30.0
+    let distanceUpdate = 1.0
     var clLocationList = [CLLocation]()
     
     var locationManager:CLLocationManager?
@@ -108,7 +108,7 @@ class Pretracker: NSObject, CLLocationManagerDelegate, UNUserNotificationCenterD
         if let isPretrack = notification.userInfo?["isPretrack"] as? Bool{
             if isPretrack {
                 self.locationManager?.desiredAccuracy = kCLLocationAccuracyBest
-                self.locationManager?.distanceFilter = 15.0
+                self.locationManager?.distanceFilter = 1.0
             } else {
                 self.locationManager?.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
                 self.locationManager?.distanceFilter = 100.0
@@ -142,7 +142,7 @@ class Pretracker: NSObject, CLLocationManagerDelegate, UNUserNotificationCenterD
     //MARK: HiorWait APIs
     // input: current location, return road name
     func getRoad(_ location: CLLocation, completion: @escaping ([String:Any])->()) {
-        let json = ["user":username,"lat": Double(location.coordinate.latitude), "lon": Double(location.coordinate.longitude)] as! [String : Any]
+        let json = ["user":CURRENT_USER?.username ?? "","lat": Double(location.coordinate.latitude), "lon": Double(location.coordinate.longitude), "speed":location.speed, "accuracy":location.horizontalAccuracy, "date":Date().timeIntervalSince1970] as! [String : Any]
         CommManager.instance.urlRequest(route: "currentroad", parameters: json) {
             json in
             completion(json)
@@ -333,6 +333,7 @@ class Pretracker: NSObject, CLLocationManagerDelegate, UNUserNotificationCenterD
     
     public func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let lastLocation = locations.last!
+        print("speed is: \(lastLocation.speed)")
 
         //call CommManager POST method
         if checkLocationAccuracy(lastLocation) {
@@ -405,7 +406,7 @@ class Pretracker: NSObject, CLLocationManagerDelegate, UNUserNotificationCenterD
     
     public func locationManager(_ manager: CLLocationManager, didEnterRegion region: CLRegion) {
         let date = Date().timeIntervalSince1970
-        let params = ["user": (CURRENT_USER?.username)! ?? "", "date":date, "status":"enter"] as [String : Any]
+        let params = ["user": (CURRENT_USER?.username)! ?? "", "date":date, "isPretrack":true] as [String : Any]
         CommManager.instance.urlRequest(route: "pretrackRegion", parameters: params, completion: {
             json in
             print(json)
@@ -416,7 +417,7 @@ class Pretracker: NSObject, CLLocationManagerDelegate, UNUserNotificationCenterD
     
     public func locationManager(_ manager: CLLocationManager, didExitRegion region: CLRegion) {
         let date = Date().timeIntervalSince1970
-        let params = ["user": (CURRENT_USER?.username)! ?? "", "date":date, "status":"exit"] as [String : Any]
+        let params = ["user": (CURRENT_USER?.username)! ?? "", "date":date, "isPretrack":false] as [String : Any]
         CommManager.instance.urlRequest(route: "pretrackRegion", parameters: params, completion: {
             json in
             print(json)

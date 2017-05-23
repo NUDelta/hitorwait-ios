@@ -104,17 +104,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                 defaults.set(decision_activity_id, forKey:"decision_activity_id")
                 let search_road = userInfo["search_road"]
                 defaults.set(search_road, forKey: "search_road")
-
                 VCforPush()
             }
         }
         
-        if (userInfo.index(forKey: "isPretrack") != nil) {
-            if let isPretrack = userInfo["isPretrack"] {
-                let nc = NotificationCenter.default
-                nc.post(name: NSNotification.Name(rawValue: "isPretrack"), object: nil, userInfo: ["isPretrack":isPretrack])
-            }
-        }
+//        if (userInfo.index(forKey: "isPretrack") != nil) {
+//            if let isPretrack = userInfo["isPretrack"] {
+//                let nc = NotificationCenter.default
+//                nc.post(name: NSNotification.Name(rawValue: "isPretrack"), object: nil, userInfo: ["isPretrack":isPretrack])
+//            }
+//        }
         
         Pretracker.sharedManager.locationManager!.requestLocation()
         

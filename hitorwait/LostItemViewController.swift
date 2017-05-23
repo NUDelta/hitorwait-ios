@@ -18,6 +18,8 @@ class LostItemViewController: UIViewController {
 //            itemDetailTextField.text = searchRegion?.itemDetail
 //        }
 //    }
+    let center = NotificationCenter.default
+    let defaults = UserDefaults.standard
 
     @IBOutlet weak var requesterNameTextField: UILabel!
     @IBOutlet weak var itemTextField: UILabel!
@@ -27,17 +29,18 @@ class LostItemViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let center = NotificationCenter.default
-        Pretracker.sharedManager.locationManager?.requestLocation()
-        
-//        getNearbySearchRegion()
-        
 //        center.addObserver(forName: NSNotification.Name(rawValue: "textFieldUpdate"), object: nil, queue: OperationQueue.main, using: updateTextField)
 //        center.addObserver(forName: NSNotification.Name(rawValue: "SearchRegionUpdate"), object: nil, queue: OperationQueue.main, using: updateSearchRegion)
         center.addObserver(forName: NSNotification.Name(rawValue: "updatedDetail"), object: nil, queue: OperationQueue.main, using: updateFields)
+        center.addObserver(forName: Notification.Name(rawValue:"PushReceived"), object: nil, queue: OperationQueue.main, using: pushReceived)
 //        getItemDetails()
         
         //TODO: add an observer for search region changes from Pretracker.
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        Pretracker.sharedManager.locationManager?.requestLocation()
+        getNearbySearchRegion()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -47,15 +50,33 @@ class LostItemViewController: UIViewController {
             print (json)
             // if there is no nearby search region with the item not found yet, server returns {"result":0}
         })
-        getNearbySearchRegion()
     }
     
     func getNearbySearchRegion() {
-        let defaults = UserDefaults.standard
-        let nc = NotificationCenter.default
+//        if let regionId = defaults.value(forKey: "regionId") as? String {
+        let lat = Pretracker.sharedManager.currentLocation?.coordinate.latitude ?? 0.0
+        let lon = Pretracker.sharedManager.currentLocation?.coordinate.longitude ?? 0.0
+        CommManager.instance.getRequest(route: "getNearbySearchRegion", parameters: ["lat":String(describing: lat), "lon":String(describing: lon)]) {
+            json in
+            print (json)
+            // if there is no nearby search region with the item not found yet, server returns {"result":0}
+            if json.index(forKey: "found") != nil {
+                let loc = json["loc"] as! [String:Any]
+                let coord = loc["coordinates"] as! [Double]
+                let id = json["_id"] as! [String:Any]
+//                    if regionId == id["$oid"] as! String {
+                self.searchRegion = LostItemRegion(requesterName: json["user"] as! String, item: json["item"] as! String, itemDetail: json["detail"] as! String, lat: coord[1], lon: coord[0], id: id["$oid"] as! String)
+                self.center.post(name: NSNotification.Name(rawValue: "updatedDetail"), object: nil, userInfo:nil)
+//                    }
+            }
+        }
+//        }
 
+    }
+    
+    func getRegionWithId() {
         if let regionId = defaults.value(forKey: "regionId") as? String {
-            CommManager.instance.getRequest(route: "getNearbySearchRegion", parameters: ["lat":String(describing: Pretracker.sharedManager.currentLocation?.coordinate.latitude), "lon":String(describing: Pretracker.sharedManager.currentLocation?.coordinate.longitude)]) {
+            CommManager.instance.getRequest(route: "getRegionWithId", parameters: ["region_id":regionId]) {
                 json in
                 print (json)
                 // if there is no nearby search region with the item not found yet, server returns {"result":0}
@@ -64,13 +85,13 @@ class LostItemViewController: UIViewController {
                     let coord = loc["coordinates"] as! [Double]
                     let id = json["_id"] as! [String:Any]
                     if regionId == id["$oid"] as! String {
-                        self.searchRegion = LostItemRegion(requesterName: json["user"] as! String, item: json["item"] as! String, itemDetail: json["detail"] as! String, lat: coord[1], lon: coord[0], id: regionId)
-                        nc.post(name: NSNotification.Name(rawValue: "updatedDetail"), object: nil, userInfo:nil)
+                        self.searchRegion = LostItemRegion(requesterName: json["user"] as! String, item: json["item"] as! String, itemDetail: json["detail"] as! String, lat: coord[1], lon: coord[0], id: id["$oid"] as! String)
+                        self.center.post(name: NSNotification.Name(rawValue: "updatedDetail"), object: nil, userInfo:nil)
                     }
                 }
             }
         }
-
+        
     }
     
     @IBAction func FoundItemButtonClicked(_ sender: UIButton) {
@@ -95,7 +116,7 @@ class LostItemViewController: UIViewController {
         
         let defaults = UserDefaults.standard
 
-        let param = ["user":(CURRENT_USER?.username)!,"lat":String(describing: (Pretracker.sharedManager.currentLocation?.coordinate.latitude)!) ?? 0.0,"lon":String(describing: (Pretracker.sharedManager.currentLocation?.coordinate.longitude)!) ?? 0.0,"uid":searchRegion?.id ?? "","decision_activity_id": defaults.value(forKey: "decision_activity_id") ?? "", "search_road": defaults.value(forKey: "search_road") ?? "", "found":true] as [String : Any]
+        let param = ["user":(CURRENT_USER?.username)!,"lat":String(describing: (Pretracker.sharedManager.currentLocation?.coordinate.latitude)!) ?? 0.0,"lon":String(describing: (Pretracker.sharedManager.currentLocation?.coordinate.longitude)!) ?? 0.0,"uid":searchRegion?.id ?? "","decision_activity_id": defaults.value(forKey: "decision_activity_id") ?? "", "search_road": defaults.value(forKey: "search_road") ?? "", "found":true, "date":Date().timeIntervalSince1970] as [String : Any]
         CommManager.instance.urlRequest(route: "updateSearch", parameters: param, completion: {
             json in
             print("thanks")
@@ -103,18 +124,18 @@ class LostItemViewController: UIViewController {
     }
     
     func itemNotFound() {
-        let alert = UIAlertController(title: "Thank you!", message: "Thank you for looking for the item!", preferredStyle: UIAlertControllerStyle.alert)
-        let okAction = UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default) {
-            act in
-            print("ok")
-        }
-        alert.addAction(okAction)
-
-        self.present(alert, animated: true, completion: nil)
+//        let alert = UIAlertController(title: "Thank you!", message: "Thank you for looking for the item!", preferredStyle: UIAlertControllerStyle.alert)
+//        let okAction = UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default) {
+//            act in
+//            print("ok")
+//        }
+//        alert.addAction(okAction)
+//
+//        self.present(alert, animated: true, completion: nil)
 
         let defaults = UserDefaults.standard
         
-        let param = ["user":(CURRENT_USER?.username)!,"lat":String(describing: (Pretracker.sharedManager.currentLocation?.coordinate.latitude)!) ?? 0.0,"lon":String(describing: (Pretracker.sharedManager.currentLocation?.coordinate.longitude)!) ?? 0.0,"uid":searchRegion?.id ?? "", "decision_activity_id": defaults.value(forKey: "decision_activity_id") ?? "", "search_road": defaults.value(forKey: "search_road") ?? "", "found":false] as [String : Any]
+        let param = ["user":(CURRENT_USER?.username)!,"lat":String(describing: (Pretracker.sharedManager.currentLocation?.coordinate.latitude)!) ?? 0.0,"lon":String(describing: (Pretracker.sharedManager.currentLocation?.coordinate.longitude)!) ?? 0.0,"uid":searchRegion?.id ?? "", "decision_activity_id": defaults.value(forKey: "decision_activity_id") ?? "", "search_road": defaults.value(forKey: "search_road") ?? "", "found":false,"date":Date().timeIntervalSince1970] as [String : Any]
         CommManager.instance.urlRequest(route: "updateSearch", parameters: param, completion: {
             json in
             print("thanks anyway")
@@ -127,6 +148,11 @@ class LostItemViewController: UIViewController {
             performSegue(withIdentifier:"ESM View", sender: self)
         }
         //TODO: update search counts.
+    }
+    
+    func pushReceived(notification: Notification) -> Void {
+        self.hasInfo = true
+        getRegionWithId()
     }
     
     func updateFields(notification: Notification) -> Void {

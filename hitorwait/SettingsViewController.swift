@@ -11,14 +11,14 @@ import UIKit
 class SettingsViewController: UIViewController {
 
     @IBOutlet weak var usernameLabel: UILabel!
-    var searchCount = ""
+    var searchCount:Int = 0
     @IBOutlet weak var searchCountLabel: UILabel!
     override func viewDidLoad() {
         super.viewDidLoad()
         usernameLabel.text = CURRENT_USER?.username
         searchCountLabel.text = "0"
-//        let center = NotificationCenter.default
-//        center.addObserver(forName: NSNotification.Name(rawValue: "updatedDetail"), object: nil, queue: OperationQueue.main, using: updateFields)
+        let center = NotificationCenter.default
+        center.addObserver(forName: NSNotification.Name(rawValue: "updatedDetail"), object: nil, queue: OperationQueue.main, using: updateFields)
 
         // Do any additional setup after loading the view.
     }
@@ -40,7 +40,11 @@ class SettingsViewController: UIViewController {
             // if there is no nearby search region with the item not found yet, server returns {"result":0}
             if json.index(forKey: "searches") != nil {
                 if let searches = json["searches"] as? Int!{
-                    self.searchCountLabel.text = String(searches!)
+                    self.searchCount = searches
+                    let defaults = UserDefaults.standard
+                    let nc = NotificationCenter.default
+                    nc.post(name: NSNotification.Name(rawValue: "updatedDetail"), object: nil, userInfo:nil)
+                    
                 }
                 
             }
@@ -48,9 +52,9 @@ class SettingsViewController: UIViewController {
 
     }
     
-//    func updateFields(notification: Notification) -> Void {
-//        self.searchCountLabel.text = searchCount
-//    }
+    func updateFields(notification: Notification) -> Void {
+        self.searchCountLabel.text = "\(searchCount)"
+    }
 
 
     override func didReceiveMemoryWarning() {

@@ -56,20 +56,23 @@ class LostItemViewController: UIViewController {
 //        if let regionId = defaults.value(forKey: "regionId") as? String {
         let lat = Pretracker.sharedManager.currentLocation?.coordinate.latitude ?? 0.0
         let lon = Pretracker.sharedManager.currentLocation?.coordinate.longitude ?? 0.0
-        CommManager.instance.getRequest(route: "getNearbySearchRegion", parameters: ["lat":String(describing: lat), "lon":String(describing: lon)]) {
-            json in
-            print (json)
-            // if there is no nearby search region with the item not found yet, server returns {"result":0}
-            if json.index(forKey: "found") != nil {
-                let loc = json["loc"] as! [String:Any]
-                let coord = loc["coordinates"] as! [Double]
-                let id = json["_id"] as! [String:Any]
-//                    if regionId == id["$oid"] as! String {
-                self.searchRegion = LostItemRegion(requesterName: json["user"] as! String, item: json["item"] as! String, itemDetail: json["detail"] as! String, lat: coord[1], lon: coord[0], id: id["$oid"] as! String)
-                self.center.post(name: NSNotification.Name(rawValue: "updatedDetail"), object: nil, userInfo:nil)
-//                    }
+        if lat != 0.0 {
+            CommManager.instance.getRequest(route: "getNearbySearchRegion", parameters: ["lat":String(describing: lat), "lon":String(describing: lon)]) {
+                json in
+                print (json)
+                // if there is no nearby search region with the item not found yet, server returns {"result":0}
+                if json.index(forKey: "found") != nil {
+                    let loc = json["loc"] as! [String:Any]
+                    let coord = loc["coordinates"] as! [Double]
+                    let id = json["_id"] as! [String:Any]
+                    //                    if regionId == id["$oid"] as! String {
+                    self.searchRegion = LostItemRegion(requesterName: json["user"] as! String, item: json["item"] as! String, itemDetail: json["detail"] as! String, lat: coord[1], lon: coord[0], id: id["$oid"] as! String)
+                    self.center.post(name: NSNotification.Name(rawValue: "updatedDetail"), object: nil, userInfo:nil)
+                    //                    }
+                }
             }
         }
+
 //        }
 
     }
@@ -156,7 +159,7 @@ class LostItemViewController: UIViewController {
     }
     
     func updateFields(notification: Notification) -> Void {
-        self.hasInfo = true
+//        self.hasInfo = true
         requesterNameTextField.text = searchRegion?.requesterName
         itemTextField.text = searchRegion?.item
         itemDetailTextField.text = searchRegion?.itemDetail

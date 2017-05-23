@@ -8,6 +8,7 @@
 
 import UIKit
 import UserNotifications
+import CoreLocation
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate{
@@ -108,6 +109,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             }
         }
         
+        if (userInfo.index(forKey: "geofence") != nil) {
+            let lat = userInfo["lat"] as! Double
+            let lon = userInfo["lon"] as! Double
+            let radius = userInfo["radius"] as! Double
+            let region = userInfo["geofence"] as! String
+            addGeofence(lat: lat,lon: lon,radius: radius,region: region)
+        }
+        
+        if (userInfo.index(forKey: "removeOneGeofence") != nil) {
+            let region = userInfo["remove"] as! String
+            removeOneGeofence(region: region)
+        }
+        
+        if (userInfo.index(forKey: "removeAllGeofence") != nil) {
+            removeAllGeofence()
+        }
+        
 //        if (userInfo.index(forKey: "isPretrack") != nil) {
 //            if let isPretrack = userInfo["isPretrack"] {
 //                let nc = NotificationCenter.default
@@ -115,7 +133,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
 //            }
 //        }
         
-        Pretracker.sharedManager.locationManager!.requestLocation()
+        Pretracker.sharedManager.locationManager!.startUpdatingLocation()
         
         if let currentLocation = Pretracker.sharedManager.currentLocation {
             let lat = currentLocation.coordinate.latitude
@@ -130,6 +148,63 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                 // need to add this for handling background fetch.
                 completionHandler(UIBackgroundFetchResult.noData)
             })
+        }
+    }
+    
+    func removeAllGeofence() {
+        for monitoredRegion in (Pretracker.sharedManager.locationManager?.monitoredRegions)! {
+            Pretracker.sharedManager.locationManager?.stopMonitoring(for: monitoredRegion)
+        }
+    }
+    
+    func removeOneGeofence(region: String) {
+        for monitoredRegion in (Pretracker.sharedManager.locationManager?.monitoredRegions)! {
+            if region ==  monitoredRegion.identifier {
+                Pretracker.sharedManager.locationManager?.stopMonitoring(for: monitoredRegion)
+            }
+        }
+    }
+    
+    func addGeofence(lat: Double,lon: Double, radius: Double, region:String) {
+//        // region 1
+//        // 42.058400,-87.680636
+//        let center1 = CLLocationCoordinate2D(latitude: 42.058400, longitude: -87.680636)
+//        let region1 = CLCircularRegion(center: center1, radius: 100, identifier: "noyes1")
+//        
+//        // region 2
+//        // 42.058387, -87.678826
+//        let center2 = CLLocationCoordinate2D(latitude: 42.058387, longitude: -87.678826)
+//        let region2 = CLCircularRegion(center: center2, radius: 100, identifier: "noyes2")
+//        
+//        // region 3
+//        // 42.057995, -87.678015
+//        let center3 = CLLocationCoordinate2D(latitude: 42.057995, longitude: -87.678015)
+//        let region3 = CLCircularRegion(center: center3, radius: 100, identifier: "noyes3")
+//        
+//        // foster 1
+//        // 42.053864, -87.680771
+//        let center4 = CLLocationCoordinate2D(latitude: 42.053864, longitude: -87.680771)
+//        let region4 = CLCircularRegion(center: center4, radius: 100, identifier: "foster1")
+//        
+//        // foster 2
+//        // 42.053868, -87.679536
+//        let center5 = CLLocationCoordinate2D(latitude: 42.053868, longitude: -87.679536)
+//        let region5 = CLCircularRegion(center: center5, radius: 100, identifier: "foster2")
+//        
+//        // foster 3
+//        // 42.053882, -87.678355
+        
+        var addRegion = true
+        for monitoredRegion in (Pretracker.sharedManager.locationManager?.monitoredRegions)! {
+            if region ==  monitoredRegion.identifier {
+                addRegion = false
+            }
+        }
+        
+        if addRegion {
+            let center = CLLocationCoordinate2D(latitude: lat, longitude: lon)
+            let region = CLCircularRegion(center: center, radius: 100, identifier: region)
+            Pretracker.sharedManager.locationManager!.startMonitoring(for: region)
         }
     }
     
@@ -159,14 +234,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
 
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
-        showNotificationForTermination()
-//        calendarNotificationForTermination()
-        let params = ["view":"appTerminated","user":(CURRENT_USER?.username)! ?? "","time":Date().timeIntervalSince1970] as [String: Any]
-        CommManager.instance.urlRequest(route: "appActivity", parameters: params, completion: {
-            json in
-            print (json)
-            // if there is no nearby search region with the item not found yet, server returns {"result":0}
-        })
+//        showNotificationForTermination()
+////        calendarNotificationForTermination()
+//        let params = ["view":"appTerminated","user":(CURRENT_USER?.username)! ?? "","time":Date().timeIntervalSince1970] as [String: Any]
+//        CommManager.instance.urlRequest(route: "appActivity", parameters: params, completion: {
+//            json in
+//            print (json)
+//            // if there is no nearby search region with the item not found yet, server returns {"result":0}
+//        })
     }
     
     func showNotificationForTermination() {

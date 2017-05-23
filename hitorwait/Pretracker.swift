@@ -76,7 +76,7 @@ class Pretracker: NSObject, CLLocationManagerDelegate, UNUserNotificationCenterD
         // location manager initialization
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        locationManager.activityType = .fitness
+//        locationManager.activityType = .fitness
         locationManager.distanceFilter = CLLocationDistance(distanceUpdate)
         if CLLocationManager.authorizationStatus() == .notDetermined {
             locationManager.requestAlwaysAuthorization()
@@ -85,7 +85,7 @@ class Pretracker: NSObject, CLLocationManagerDelegate, UNUserNotificationCenterD
         
         // We should always enable this for background location tracking.
         locationManager.allowsBackgroundLocationUpdates = true
-        locationManager.pausesLocationUpdatesAutomatically = true
+//        locationManager.pausesLocationUpdatesAutomatically = true
 //        locationManager.startUpdatingLocation()
         
         // TODO: need to change the logic for finding lost item region.
@@ -108,6 +108,11 @@ class Pretracker: NSObject, CLLocationManagerDelegate, UNUserNotificationCenterD
         let center3 = CLLocationCoordinate2D(latitude: 42.057995, longitude: -87.678015)
         let region3 = CLCircularRegion(center: center3, radius: 100, identifier: "noyes3")
         
+        // noyes 4
+        // 42.059053, -87.677120
+        let center7 = CLLocationCoordinate2D(latitude: 42.059053, longitude: -87.677120)
+        let region7 = CLCircularRegion(center: center7, radius: 100, identifier: "noyes4")
+        
         // foster 1
         // 42.053864, -87.680771
         let center4 = CLLocationCoordinate2D(latitude: 42.053864, longitude: -87.680771)
@@ -124,6 +129,7 @@ class Pretracker: NSObject, CLLocationManagerDelegate, UNUserNotificationCenterD
         let region6 = CLCircularRegion(center: center6, radius: 150, identifier: "foster3")
         
         regionLocation = CLLocation(latitude: regionLat, longitude: regionLng)
+        
         locationManager.startMonitoring(for: region1)
         locationManager.startMonitoring(for: region2)
         locationManager.startMonitoring(for: region3)
@@ -146,8 +152,8 @@ class Pretracker: NSObject, CLLocationManagerDelegate, UNUserNotificationCenterD
                 self.locationManager?.desiredAccuracy = kCLLocationAccuracyBest
                 self.locationManager?.distanceFilter = 1.0
             } else {
-                self.locationManager?.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
-                self.locationManager?.distanceFilter = 100.0
+                self.locationManager?.desiredAccuracy = kCLLocationAccuracyBest
+                self.locationManager?.distanceFilter = 1.0
             }
             
         }
@@ -442,8 +448,8 @@ class Pretracker: NSObject, CLLocationManagerDelegate, UNUserNotificationCenterD
     
     public func locationManager(_ manager: CLLocationManager, didEnterRegion region: CLRegion) {
         let date = Date().timeIntervalSince1970
-        let lat = Pretracker.sharedManager.currentLocation?.coordinate.latitude ?? 0.0
-        let lon = Pretracker.sharedManager.currentLocation?.coordinate.longitude ?? 0.0
+        let lat = currentLocation?.coordinate.latitude ?? 0.0
+        let lon = currentLocation?.coordinate.longitude ?? 0.0
         let params = ["user": (CURRENT_USER?.username)! ?? "", "date":date, "isPretrack":true, "region":region.identifier, "lat":lat,"lon":lon] as [String : Any]
         CommManager.instance.urlRequest(route: "pretrackRegion", parameters: params, completion: {
             json in
@@ -454,13 +460,15 @@ class Pretracker: NSObject, CLLocationManagerDelegate, UNUserNotificationCenterD
     }
     
     public func locationManager(_ manager: CLLocationManager, didExitRegion region: CLRegion) {
-//        let date = Date().timeIntervalSince1970
-//        let params = ["user": (CURRENT_USER?.username)! ?? "", "date":date, "isPretrack":false, "region": region.identifier] as [String : Any]
-//        CommManager.instance.urlRequest(route: "pretrackRegion", parameters: params, completion: {
-//            json in
-//            print(json)
-//            // need to add this for handling background fetch.
-//        })
+        let date = Date().timeIntervalSince1970
+        let lat = currentLocation?.coordinate.latitude ?? 0.0
+        let lon = currentLocation?.coordinate.longitude ?? 0.0
+        let params = ["user": (CURRENT_USER?.username)! ?? "", "date":date, "isPretrack":false, "region": region.identifier] as [String : Any]
+        CommManager.instance.urlRequest(route: "pretrackRegion", parameters: params, completion: {
+            json in
+            print(json)
+            // need to add this for handling background fetch.
+        })
         print("didExit")
     }
     

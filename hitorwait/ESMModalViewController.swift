@@ -26,12 +26,16 @@ class ESMModalViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        let params = ["view":"esmView","user":(CURRENT_USER?.username)! ?? "","time":Date().timeIntervalSince1970] as [String: Any]
-        CommManager.instance.urlRequest(route: "appActivity", parameters: params, completion: {
-            json in
-            print (json)
-            // if there is no nearby search region with the item not found yet, server returns {"result":0}
-        })
+        let lat = Pretracker.sharedManager.currentLocation?.coordinate.latitude ?? 0.0
+        let lon = Pretracker.sharedManager.currentLocation?.coordinate.longitude ?? 0.0
+        if lat != 0.0 {
+            let params = ["view":"esmView","user":(CURRENT_USER?.username)! ?? "","time":Date().timeIntervalSince1970,"lat":String(describing: lat),"lon":String(describing: lon)] as [String: Any]
+            CommManager.instance.urlRequest(route: "appActivity", parameters: params, completion: {
+                json in
+                print (json)
+                // if there is no nearby search region with the item not found yet, server returns {"result":0}
+            })
+        }
     }
     
     @IBAction func submitButtonClicked(_ sender: Any) {
@@ -43,12 +47,17 @@ class ESMModalViewController: UIViewController {
     }
     
     func submitRating() {
-        let params = ["view":"esmView","user":(CURRENT_USER?.username)! ?? "","time":Date().timeIntervalSince1970, "rating":rating,"lat":String(describing: (Pretracker.sharedManager.currentLocation?.coordinate.latitude)!) ?? 0.0,"lon":String(describing: (Pretracker.sharedManager.currentLocation?.coordinate.longitude)!) ?? 0.0] as [String: Any]
-        
-        CommManager.instance.urlRequest(route: "esm", parameters: params, completion: {
-            json in
-            print("thanks")
-        })
+        let lat = Pretracker.sharedManager.currentLocation?.coordinate.latitude ?? 0.0
+        let lon = Pretracker.sharedManager.currentLocation?.coordinate.longitude ?? 0.0
+        if lat != 0.0 {
+            
+            let params = ["view":"esmView","user":(CURRENT_USER?.username)! ?? "","time":Date().timeIntervalSince1970, "rating":rating,"lat":String(describing: lat),"lon":String(describing: lon)] as [String: Any]
+            
+            CommManager.instance.urlRequest(route: "esm", parameters: params, completion: {
+                json in
+                print("thanks")
+            })
+        }
     }
 
     @IBAction func valueChange(_ sender: UISlider) {

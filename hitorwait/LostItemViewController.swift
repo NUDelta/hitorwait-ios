@@ -44,12 +44,17 @@ class LostItemViewController: UIViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        let params = ["view":"lostItemView","user":(CURRENT_USER?.username)! ?? "","time":Date().timeIntervalSince1970] as [String: Any]
-        CommManager.instance.urlRequest(route: "appActivity", parameters: params, completion: {
-            json in
-            print (json)
-            // if there is no nearby search region with the item not found yet, server returns {"result":0}
-        })
+        let lat = Pretracker.sharedManager.currentLocation?.coordinate.latitude ?? 0.0
+        let lon = Pretracker.sharedManager.currentLocation?.coordinate.longitude ?? 0.0
+        if lat != 0.0 {
+            let params = ["view":"lostItemView","user":(CURRENT_USER?.username)! ?? "","time":Date().timeIntervalSince1970,"lat":String(describing: lat),"lon":String(describing:lon)] as [String: Any]
+            CommManager.instance.urlRequest(route: "appActivity", parameters: params, completion: {
+                json in
+                print (json)
+                // if there is no nearby search region with the item not found yet, server returns {"result":0}
+            })
+        }
+
     }
     
     func getNearbySearchRegion() {

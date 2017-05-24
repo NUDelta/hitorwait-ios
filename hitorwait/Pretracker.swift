@@ -34,7 +34,7 @@ class Pretracker: NSObject, CLLocationManagerDelegate, UNUserNotificationCenterD
     var hasPosted = false
     
     // 40-50 meters = road segment change
-    let distanceUpdate = 1.0
+    let distanceUpdate = 15.0
     var clLocationList = [CLLocation]()
     
     var locationManager:CLLocationManager?
